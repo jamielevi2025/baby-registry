@@ -6,192 +6,636 @@
   <title>Baby Registry Helper — Compare, Build & Budget</title>
   <meta name="description" content="Compare the top baby registry products across 20+ categories. Smart comparison, personalized recommendations, registry builder, and budget tracker." />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #ffffff;
-      --bg2: #f7f7f5;
-      --bg3: #f0efe9;
-      --text: #1a1a1a;
-      --text2: #6b6b6b;
-      --text3: #9b9b9b;
-      --border: rgba(0,0,0,0.10);
-      --border2: rgba(0,0,0,0.18);
-      --blue: #378ADD;
-      --blue-dark: #0C447C;
-      --blue-light: #E6F1FB;
-      --green: #639922;
-      --red: #E24B4A;
-      --red-dark: #791F1F;
-      --red-light: #FCEBEB;
-      --amber: #BA7517;
-      --amber-light: #FAEEDA;
-      --radius: 10px;
-      --radius-sm: 6px;
+      --cream: #fef6f0;
+      --pale-pink: #fde2e4;
+      --soft-purple: #f3e9fb;
+      --pale-blue: #e8f4f8;
+      --pale-yellow: #fffaf0;
+      --pale-green: #f0fdf4;
+      --text-dark: #4a3f3f;
+      --text-med: #7a6f6f;
+      --text-light: #b0a5a5;
+      --accent-pink: #ff99c8;
+      --accent-purple: #c991e8;
+      --accent-blue: #87ceeb;
+      --accent-yellow: #ffd700;
+      --accent-green: #98d98e;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1a1a;
-        --bg2: #242424;
-        --bg3: #2e2e2e;
-        --text: #f0f0f0;
-        --text2: #a0a0a0;
-        --text3: #6a6a6a;
-        --border: rgba(255,255,255,0.10);
-        --border2: rgba(255,255,255,0.18);
-      }
-    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg3);
-      color: var(--text);
+      font-family: 'Silkscreen', 'Arial', sans-serif;
+      background: linear-gradient(135deg, var(--soft-purple) 0%, var(--pale-blue) 50%, var(--pale-pink) 100%);
+      color: var(--text-dark);
       min-height: 100vh;
+      padding: 20px;
     }
+
     .shell {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
-      background: var(--bg);
+      background: var(--cream);
+      border: 4px solid var(--text-dark);
+      box-shadow:
+        8px 8px 0 rgba(0,0,0,0.1),
+        inset 0 0 0 2px var(--pale-pink);
       min-height: 100vh;
-      box-shadow: 0 0 0 0.5px var(--border);
+      position: relative;
     }
+
+    .shell::before {
+      content: '✨';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .shell::after {
+      content: '✨';
+      position: absolute;
+      bottom: 20px;
+      left: 15px;
+      font-size: 24px;
+      animation: float 3s ease-in-out infinite 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
     .header {
-      padding: 1.25rem 1.25rem 0.75rem;
+      padding: 2rem;
       text-align: center;
-      border-bottom: 0.5px solid var(--border);
-      background: var(--bg);
+      border-bottom: 4px dashed var(--text-dark);
+      background: linear-gradient(90deg, var(--pale-yellow), var(--pale-pink), var(--soft-purple));
+      position: relative;
     }
-    .header h1 { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
-    .header p { font-size: 13px; color: var(--text2); margin-top: 3px; }
-    .nav { display: flex; border-bottom: 0.5px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 100; }
-    .nav-btn { flex: 1; padding: 11px 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: none; color: var(--text2); border-bottom: 2px solid transparent; transition: all 0.15s; }
-    .nav-btn.active { color: var(--blue-dark); border-bottom-color: var(--blue); }
-    .nav-btn:hover { background: var(--bg2); }
-    .badge { display: inline-block; background: var(--red); color: white; border-radius: 10px; font-size: 10px; padding: 1px 7px; margin-left: 4px; }
-    .page { display: none; padding: 1rem 1.25rem 2rem; }
-    .page.active { display: block; }
-    .group-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; padding: 8px 0 4px; }
-    .cats { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
-    .cat-btn {
-      border: 0.5px solid var(--border2);
-      background: var(--bg);
-      border-radius: 20px;
-      padding: 5px 11px;
-      font-size: 11px;
+
+    .header h1 {
+      font-size: 2.5rem;
+      color: var(--accent-pink);
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 0.9rem;
+      color: var(--text-med);
+      letter-spacing: 1px;
+    }
+
+    .nav {
+      display: flex;
+      border-bottom: 4px solid var(--text-dark);
+      background: var(--cream);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-family: 'Silkscreen', sans-serif;
+      font-weight: 700;
       cursor: pointer;
-      color: var(--text2);
-      white-space: nowrap;
+      border: 2px solid transparent;
+      border-bottom: 4px solid transparent;
+      background: var(--pale-yellow);
+      color: var(--text-dark);
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--pale-pink);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-pink);
+      color: white;
+      border-bottom-color: var(--accent-pink);
+      box-shadow: inset 0 2px 0 rgba(0,0,0,0.2);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-pink);
+      color: white;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      margin-left: 6px;
+      font-weight: 700;
+    }
+
+    .page {
+      display: none;
+      padding: 2rem 1.5rem;
+      min-height: calc(100vh - 200px);
+    }
+
+    .page.active { display: block; }
+
+    .group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-med);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 1rem 0 0.5rem;
+      border-bottom: 2px dashed var(--text-light);
+    }
+
+    .cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cat-btn {
+      border: 3px solid var(--text-dark);
+      background: var(--pale-yellow);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-family: 'Silkscreen', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-dark);
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      transition: background 0.12s, border-color 0.12s;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
     }
-    .cat-btn:hover { background: var(--bg2); }
-    .cat-btn.active { background: var(--blue-light); border-color: var(--blue); color: var(--blue-dark); font-weight: 600; }
-    .cat-ess { font-size: 8px; background: var(--red-light); color: var(--red-dark); border-radius: 3px; padding: 1px 4px; border: 0.5px solid #F09595; }
-    .cat-nice { font-size: 8px; background: var(--blue-light); color: var(--blue-dark); border-radius: 3px; padding: 1px 4px; border: 0.5px solid #85B7EB; }
-    .divider { height: 0.5px; background: var(--border); margin: 6px 0 8px; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .pcard { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; transition: border-color 0.15s, box-shadow 0.15s; }
-    .pcard:hover { border-color: var(--border2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .pcard.comparing { border: 2px solid var(--blue); }
-    .pcard.in-registry { border: 2px solid var(--green); }
-    .pname { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; line-height: 1.35; }
-    .pbrand { font-size: 11px; color: var(--text2); margin-bottom: 5px; }
-    .pprice { font-size: 15px; font-weight: 600; color: var(--blue-dark); margin-bottom: 3px; }
-    .prating { font-size: 11px; color: var(--text2); margin-bottom: 9px; }
-    .star { color: #EF9F27; }
-    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
-    .plabel { font-size: 10px; font-weight: 600; margin-bottom: 3px; }
-    .plabel.pro { color: #3B6D11; }
-    .plabel.con { color: #A32D2D; }
-    .plist { font-size: 11px; color: var(--text2); padding-left: 12px; }
-    .plist li { margin-bottom: 3px; line-height: 1.4; }
-    .pactions { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-    .alink { font-size: 11px; padding: 5px 10px; border-radius: var(--radius-sm); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2); text-decoration: none; display: inline-block; cursor: pointer; transition: background 0.1s; }
-    .alink:hover { background: var(--bg3); color: var(--text); }
-    .alink.amz { background: var(--amber-light); border-color: var(--amber); color: #633806; }
-    .card-btns { display: flex; gap: 5px; }
-    .cbtn { flex: 1; font-size: 11px; padding: 6px 4px; border-radius: var(--radius-sm); border: 0.5px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; text-align: center; transition: all 0.12s; }
-    .cbtn:hover { background: var(--bg2); }
-    .cbtn.cmp-on { background: var(--blue-light); border-color: var(--blue); color: var(--blue-dark); font-weight: 500; }
-    .cbtn.reg-on { background: #EAF3DE; border-color: var(--green); color: var(--green); font-weight: 500; }
-    .legend { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; padding: 8px 12px; background: var(--bg2); border-radius: var(--radius); }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
-    .ess-badge { display: inline-block; font-size: 9px; background: var(--red-light); color: var(--red-dark); border-radius: 3px; padding: 1px 5px; vertical-align: middle; border: 0.5px solid #F09595; }
-    .nice-badge { display: inline-block; font-size: 9px; background: var(--blue-light); color: var(--blue-dark); border-radius: 3px; padding: 1px 5px; vertical-align: middle; border: 0.5px solid #85B7EB; }
-    .popular-badge { display: inline-block; font-size: 9px; background: #EAF3DE; color: var(--green); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
-    .budget-flag { display: inline-block; font-size: 9px; background: var(--amber-light); color: var(--amber-dark); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
-    .info-note { font-size: 12px; color: var(--text2); background: var(--bg2); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 10px; }
-    .reg-empty { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 14px; }
-    .reg-item { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+
+    .cat-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+    }
+
+    .cat-btn.active {
+      background: var(--accent-pink);
+      color: white;
+      border-color: var(--accent-pink);
+    }
+
+    .cat-ess {
+      font-size: 0.65rem;
+      background: #ffe0e6;
+      color: var(--accent-pink);
+      border-radius: 3px;
+      padding: 1px 4px;
+      border: 2px solid var(--accent-pink);
+      font-weight: 700;
+    }
+
+    .cat-nice {
+      font-size: 0.65rem;
+      background: #e8f4f8;
+      color: var(--accent-blue);
+      border-radius: 3px;
+      padding: 1px 4px;
+      border: 2px solid var(--accent-blue);
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 2px;
+      background: dashed var(--text-light);
+      margin: 1.5rem 0;
+    }
+
+    .info-note {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      background: var(--pale-pink);
+      border: 3px solid var(--text-dark);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .pcard {
+      background: var(--pale-yellow);
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .pcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.15);
+    }
+
+    .pcard.comparing {
+      border-color: var(--accent-pink);
+      border-width: 4px;
+      background: #fff5f7;
+    }
+
+    .pcard.in-registry {
+      border-color: var(--accent-green);
+      border-width: 4px;
+      background: #f8fff6;
+    }
+
+    .pname {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .pbrand {
+      font-size: 0.75rem;
+      color: var(--text-med);
+      margin-bottom: 6px;
+    }
+
+    .pprice {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-pink);
+      margin-bottom: 4px;
+    }
+
+    .prating {
+      font-size: 0.8rem;
+      color: var(--text-med);
+      margin-bottom: 8px;
+    }
+
+    .star { color: var(--accent-yellow); }
+
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+    }
+
+    .plabel {
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .plabel.pro { color: var(--accent-green); }
+    .plabel.con { color: var(--accent-pink); }
+
+    .plist {
+      font-size: 0.75rem;
+      color: var(--text-med);
+      padding-left: 12px;
+    }
+
+    .plist li { margin-bottom: 2px; line-height: 1.3; }
+
+    .pactions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .alink {
+      font-size: 0.75rem;
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 2px solid var(--text-dark);
+      background: var(--pale-blue);
+      color: var(--text-dark);
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-weight: 700;
+    }
+
+    .alink:hover {
+      background: var(--accent-blue);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .card-btns {
+      display: flex;
+      gap: 5px;
+    }
+
+    .cbtn {
+      flex: 1;
+      font-size: 0.75rem;
+      padding: 6px 4px;
+      border-radius: 6px;
+      border: 2px solid var(--text-dark);
+      background: var(--pale-pink);
+      color: var(--text-dark);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      font-family: 'Silkscreen', sans-serif;
+      font-weight: 700;
+    }
+
+    .cbtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    }
+
+    .cbtn.cmp-on {
+      background: var(--accent-pink);
+      color: white;
+      border-color: var(--accent-pink);
+    }
+
+    .cbtn.reg-on {
+      background: var(--accent-green);
+      color: white;
+      border-color: var(--accent-green);
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: var(--pale-pink);
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .ess-badge, .nice-badge, .popular-badge, .budget-flag {
+      display: inline-block;
+      font-size: 0.65rem;
+      border-radius: 3px;
+      padding: 2px 4px;
+      font-weight: 700;
+      border: 2px solid;
+    }
+
+    .ess-badge {
+      background: #ffe0e6;
+      color: var(--accent-pink);
+      border-color: var(--accent-pink);
+    }
+
+    .nice-badge {
+      background: #e8f4f8;
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .popular-badge {
+      background: #f0fdf4;
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .budget-flag {
+      background: #fffaf0;
+      color: var(--accent-yellow);
+      border-color: #d4a574;
+    }
+
+    .reg-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-med);
+      font-size: 1rem;
+    }
+
+    .reg-item {
+      background: var(--pale-yellow);
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+    }
+
     .ri-info { flex: 1; }
-    .ri-name { font-size: 13px; font-weight: 600; color: var(--text); }
-    .ri-sub { font-size: 11px; color: var(--text2); margin-top: 1px; }
-    .ri-price { font-size: 13px; font-weight: 600; color: var(--blue-dark); margin-top: 3px; }
-    .rm-btn { font-size: 11px; padding: 5px 9px; border: 0.5px solid var(--border2); border-radius: 4px; cursor: pointer; background: none; color: var(--text2); white-space: nowrap; }
-    .rm-btn:hover { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
-    .cat-hd { font-size: 13px; font-weight: 600; color: var(--text); margin: 1.25rem 0 0.4rem; padding-bottom: 5px; border-bottom: 0.5px solid var(--border); }
-    .budget-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-    .budget-input-row label { font-size: 13px; color: var(--text2); font-weight: 500; }
-    .budget-input-row input { width: 130px; padding: 7px 10px; border: 0.5px solid var(--border2); border-radius: var(--radius-sm); font-size: 13px; background: var(--bg); color: var(--text); }
-    .budget-box { background: var(--bg2); border-radius: var(--radius); padding: 16px; margin-bottom: 1rem; }
-    .brow { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 7px; }
-    .bl { color: var(--text2); }
-    .bv { font-weight: 600; color: var(--text); }
-    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 10px; }
-    .progress-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
-    .tip-box { font-size: 12px; color: var(--text2); background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 10px; line-height: 1.6; }
-    .footer { text-align: center; padding: 1.5rem 1rem; border-top: 0.5px solid var(--border); font-size: 11px; color: var(--text3); }
+    .ri-name { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+    .ri-sub { font-size: 0.8rem; color: var(--text-med); margin-top: 2px; }
+    .ri-price { font-size: 0.95rem; font-weight: 700; color: var(--accent-pink); margin-top: 4px; }
+
+    .rm-btn {
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      border: 2px solid var(--text-dark);
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--pale-pink);
+      color: var(--text-dark);
+      font-family: 'Silkscreen', sans-serif;
+      font-weight: 700;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .rm-btn:hover {
+      background: #ff6b9d;
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .cat-hd {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 1.5rem 0 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px dashed var(--text-med);
+    }
+
+    .budget-input-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .budget-input-row label {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .budget-input-row input {
+      width: 140px;
+      padding: 8px 10px;
+      border: 3px solid var(--text-dark);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: var(--pale-yellow);
+      color: var(--text-dark);
+      font-family: 'Silkscreen', sans-serif;
+    }
+
+    .budget-box {
+      background: var(--soft-purple);
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    .brow {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .bl { color: var(--text-med); }
+    .bv { color: var(--accent-pink); }
+
+    .progress-bar {
+      height: 16px;
+      background: white;
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0;
+      box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      transition: width 0.4s ease;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+    }
+
+    .tip-box {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      background: var(--pale-pink);
+      border: 3px solid var(--text-dark);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      line-height: 1.5;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 4px dashed var(--text-dark);
+      font-size: 0.8rem;
+      color: var(--text-med);
+      font-weight: 700;
+    }
+
     @media (max-width: 600px) {
       .product-grid { grid-template-columns: 1fr; }
-      .header h1 { font-size: 19px; }
-      .page { padding: 0.75rem 1rem 2rem; }
-      .reg-item { flex-direction: column; align-items: flex-start; }
+      .header h1 { font-size: 2rem; }
+      .page { padding: 1rem; }
+      .reg-item { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 <div class="shell">
   <div class="header">
-    <h1>🍼 Baby Registry Helper</h1>
-    <p>Compare top products · Build your registry · Track your budget</p>
+    <h1>🍼 Baby Registry 🎀</h1>
+    <p>✨ Browse • Compare • Build your perfect registry ✨</p>
   </div>
+
   <div class="nav">
-    <button class="nav-btn active" id="nb-browse">Browse</button>
-    <button class="nav-btn" id="nb-registry">My Registry <span class="badge" id="reg-count">0</span></button>
-    <button class="nav-btn" id="nb-budget">Budget</button>
+    <button class="nav-btn active" id="nb-browse">Browse 🛒</button>
+    <button class="nav-btn" id="nb-registry">My Registry 💕 <span class="badge" id="reg-count">0</span></button>
+    <button class="nav-btn" id="nb-budget">Budget 💰</button>
   </div>
+
   <div class="page active" id="page-browse">
-    <div class="group-label">Sleeping</div>
+    <div class="group-label">🌙 Sleeping</div>
     <div class="cats" id="cats-sleep"></div>
     <div class="divider"></div>
-    <div class="group-label">Travel &amp; on the go</div>
+
+    <div class="group-label">🚗 Travel & on the go</div>
     <div class="cats" id="cats-travel"></div>
     <div class="divider"></div>
-    <div class="group-label">Feeding</div>
+
+    <div class="group-label">🍽️ Feeding</div>
     <div class="cats" id="cats-feed"></div>
     <div class="divider"></div>
-    <div class="group-label">Diapering</div>
+
+    <div class="group-label">🧷 Diapering</div>
     <div class="cats" id="cats-diaper"></div>
     <div class="divider"></div>
-    <div class="group-label">Bath &amp; health</div>
+
+    <div class="group-label">🛁 Bath & health</div>
     <div class="cats" id="cats-bath"></div>
     <div class="divider"></div>
-    <div class="group-label">Nursery &amp; play</div>
+
+    <div class="group-label">🪑 Nursery & play</div>
     <div class="cats" id="cats-nursery"></div>
     <div class="divider"></div>
-    <div class="group-label">For mom — postpartum</div>
+
+    <div class="group-label">💐 For mom — postpartum</div>
     <div class="cats" id="cats-mom"></div>
     <div class="divider"></div>
+
     <div id="browse-content">
-      <div style="text-align:center;padding:3rem 1rem;color:var(--text2)">
-        <div style="font-size:40px;margin-bottom:10px">🍼</div>
-        <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px">Pick a category above to get started</div>
+      <div style="text-align:center;padding:3rem 1rem;color:var(--text-med)">
+        <div style="font-size:48px;margin-bottom:1rem">🍼</div>
+        <div style="font-size:1.3rem;font-weight:700;color:var(--text-dark);margin-bottom:0.5rem">Pick a category above to get started!</div>
+        <div style="font-size:0.9rem">Categories marked <span class="ess-badge">Essential</span> are must-haves</div>
       </div>
     </div>
   </div>
+
   <div class="page" id="page-registry"><div id="registry-content"></div></div>
   <div class="page" id="page-budget"><div id="budget-content"></div></div>
-  <div class="footer">Made with ❤️ for new parents — products and prices are approximate. Always verify before purchasing.</div>
+
+  <div class="footer">
+    Made with 💖 for new parents • Products & prices are approximate • Always verify before purchasing
+  </div>
 </div>
 
 <script>
@@ -204,30 +648,30 @@ var CATS_NURSERY=[{id:"nursery",label:"Nursery & Play",e:"🪑",essential:true},
 var CATS_MOM=[{id:"postpartum_body",label:"Body Recovery & Breastfeeding",e:"🌸",essential:true,pp:true},{id:"postpartum_mental",label:"Mental Wellness & Sleep",e:"🧘",essential:false,pp:true}];
 
 var P={
-strollers:[{name:"UPPAbaby VISTA V3",brand:"UPPAbaby",price:"$1,099",price_low:1099,rating:4.9,reviews:"9,200+",popular:true,essential:true,best_for:"Growing families",pros:["Converts to double","Huge basket","Comfortable"],cons:["Heavy","Expensive","Bulky"]},{name:"UPPAbaby CRUZ V2",brand:"UPPAbaby",price:"$749",price_low:749,rating:4.8,reviews:"5,100+",popular:false,essential:true,best_for:"City stroller",pros:["Lighter","Compact","Great maneuverability"],cons:["No double","Smaller basket","Less features"]},{name:"Nuna MIXX Next",brand:"Nuna",price:"$799",price_low:799,rating:4.7,reviews:"3,400+",popular:false,essential:true,best_for:"Everyday use",pros:["Magnetic buckle","Reversible seat","Safe fabrics"],cons:["Expensive","Limited colors","Heavy"]},{name:"Bugaboo Fox 5",brand:"Bugaboo",price:"$1,299",price_low:1299,rating:4.7,reviews:"4,100+",popular:false,essential:true,best_for:"Smooth ride",pros:["Best suspension","Reversible seat","Premium build"],cons:["Most expensive","Accessories extra","Heavy"]},{name:"Graco Modes Nest Travel System",brand:"Graco",price:"$299",price_low:299,rating:4.6,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Budget value",pros:["Great price","Converts modes","Car seat compat"],cons:["Heavier","Less compact","Fewer features"]}],
-bassinets:[{name:"SNOO Smart Sleeper",brand:"Happiest Baby",price:"$1,695",price_low:1695,rating:4.6,reviews:"5,900+",popular:true,essential:false,best_for:"Smart sleep",pros:["Auto-responds","App tracking","Weaning mode"],cons:["Expensive","Short use","Requires wifi"]},{name:"Halo BassiNest Swivel",brand:"Halo",price:"$269",price_low:269,rating:4.4,reviews:"12,100+",popular:false,essential:true,best_for:"Bedside access",pros:["Swivels 360°","Drop-side","Vibration"],cons:["No motion","Basic","Limited use"]},{name:"Graco Dream Suite",brand:"Graco",price:"$149",price_low:149,rating:4.3,reviews:"5,100+",popular:false,budget:true,essential:true,best_for:"Budget",pros:["Affordable","Safe","Converts"],cons:["Plastic feel","Weak vibration","Short use"]},{name:"4moms mamaRoo Sleep",brand:"4moms",price:"$379",price_low:379,rating:4.3,reviews:"4,200+",popular:false,essential:false,best_for:"Motion lovers",pros:["5 motions","App control","Breathable mesh"],cons:["Some reject it","Pricey","Short use"]},{name:"Babyletto Lolly 3-in-1 Crib",brand:"Babyletto",price:"$499",price_low:499,rating:4.8,reviews:"3,700+",popular:false,essential:true,best_for:"Long-term",pros:["Converts to toddler","Eco certified","Beautiful design"],cons:["Mattress separate","Not bassinet","Larger footprint"]}],
-carseats:[{name:"Chicco KeyFit 35",brand:"Chicco",price:"$199",price_low:199,rating:4.8,reviews:"22,000+",popular:true,essential:true,best_for:"Easiest install",pros:["SuperCinch LATCH","Wide nipple","Great protection"],cons:["Heavy","Outgrown quickly","Small canopy"]},{name:"Graco 4Ever DLX",brand:"Graco",price:"$279",price_low:279,rating:4.7,reviews:"18,500+",popular:false,essential:true,best_for:"Long-lasting",pros:["Birth to 120 lbs","4 modes","Great value"],cons:["Bulky","Hard to transfer","Heavy"]},{name:"UPPAbaby MESA V2",brand:"UPPAbaby",price:"$399",price_low:399,rating:4.8,reviews:"6,300+",popular:false,essential:true,best_for:"UPPAbaby stroller",pros:["Click-in install","SMARTSecure system","Seamless pairing"],cons:["Very expensive","Outgrown quickly","Heavy"]},{name:"Britax One4Life ClickTight",brand:"Britax",price:"$399",price_low:399,rating:4.7,reviews:"9,100+",popular:false,essential:true,best_for:"Safety first",pros:["ClickTight install","Anti-rebound bar","Best ratings"],cons:["Expensive","Very heavy","Takes space"]},{name:"Evenflo EveryFit 4-in-1",brand:"Evenflo",price:"$139",price_low:139,rating:4.5,reviews:"8,200+",popular:false,budget:true,essential:true,best_for:"Budget all-in-one",pros:["Very affordable","Good weight limits","Safe"],cons:["Less padding","Cheap feel","Fewer features"]}],
-whitenoise:[{name:"Hatch Rest 2nd Gen",brand:"Hatch",price:"$69",price_low:69,rating:4.7,reviews:"14,800+",popular:true,essential:false,best_for:"All-in-one",pros:["App-controlled","Time-to-rise cues","Night light + sound"],cons:["WiFi required","Subscription for full","Pricier"]},{name:"Marpac Dohm Classic",brand:"Marpac",price:"$44",price_low:44,rating:4.6,reviews:"31,000+",popular:false,essential:false,best_for:"True white noise",pros:["Real fan motor","Two speeds","Sleep favorite"],cons:["No app","White noise only","Plug-in only"]},{name:"Dreamegg D1",brand:"Dreamegg",price:"$24",price_low:24,rating:4.6,reviews:"16,400+",popular:false,budget:true,essential:false,best_for:"Budget option",pros:["Affordable","11 sounds","Night light"],cons:["No app","Digital loop","Basic"]},{name:"Frida Baby 3-in-1 Humidifier",brand:"Frida Baby",price:"$59",price_low:59,rating:4.6,reviews:"7,200+",popular:false,essential:false,best_for:"Nursery all-in-one",pros:["Cool mist","Nightlight","Diffuser"],cons:["Smaller tank","Basic run time","Diffuser not for newborns"]},{name:"Pure Enrichment MistAire",brand:"Pure Enrichment",price:"$29",price_low:29,rating:4.5,reviews:"34,000+",popular:false,budget:true,essential:false,best_for:"Budget humidifier",pros:["Very affordable","Night light","Auto shutoff"],cons:["Small tank","Refill often","Basic"]}],
-swaddles:[{name:"Aden + Anais Classic Muslin",brand:"Aden + Anais",price:"$40",price_low:40,rating:4.7,reviews:"28,000+",popular:true,essential:true,best_for:"Versatile classic",pros:["Breathable","Gets softer","Multi-use"],cons:["Technique needed","Can escape","Pricier"]},{name:"Halo SleepSack Swaddle",brand:"Halo",price:"$24",price_low:24,rating:4.6,reviews:"32,000+",popular:false,essential:true,best_for:"Foolproof velcro",pros:["No wrapping needed","3-way config","Easy"],cons:["Can undo velcro","Less breathable","Sizing small"]},{name:"Love to Dream Swaddle UP",brand:"Love to Dream",price:"$34",price_low:34,rating:4.7,reviews:"21,000+",popular:false,essential:false,best_for:"Arms-up position",pros:["Arms-up natural","Zipper closure","No wrapping"],cons:["Arms-up only","Pricier","Narrow sizing"]},{name:"Kyte Baby Sleep Bag",brand:"Kyte Baby",price:"$36",price_low:36,rating:4.8,reviews:"11,200+",popular:false,essential:false,best_for:"Softest post-swaddle",pros:["Ultra-soft bamboo","Many TOGs","Beautiful colors"],cons:["Pricier","Post-swaddle only","Hand wash"]},{name:"Nested Bean Zen Swaddle",brand:"Nested Bean",price:"$50",price_low:50,rating:4.6,reviews:"8,900+",popular:false,essential:false,best_for:"Weighted swaddle",pros:["Gentle weighted zone","Reduces startle","Cozy"],cons:["Temperature sensitive","Pricier","One use stage"]}],
-humidifier:[{name:"Frida Baby 3-in-1",brand:"Frida Baby",price:"$59",price_low:59,rating:4.6,reviews:"7,200+",popular:true,essential:false,best_for:"Nursery + light",pros:["Cool mist","Night light","Diffuser"],cons:["Smaller tank","Needs refills","Not for under 2"]},{name:"Crane Adorable Ultrasonic",brand:"Crane",price:"$39",price_low:39,rating:4.5,reviews:"19,400+",popular:false,essential:false,best_for:"Cute design",pros:["Animal designs","500 sq ft","Filter-free"],cons:["Small tank","No nightlight","Distilled water needed"]},{name:"Pure Enrichment MistAire",brand:"Pure Enrichment",price:"$29",price_low:29,rating:4.5,reviews:"34,000+",popular:false,budget:true,essential:false,best_for:"Budget starter",pros:["Affordable","Night light","Auto shutoff"],cons:["Small tank","Refills often","Basic features"]},{name:"Levoit Dual 150",brand:"Levoit",price:"$79",price_low:79,rating:4.7,reviews:"15,600+",popular:false,essential:false,best_for:"Large room coverage",pros:["600 sq ft","Whisper quiet","Covers large"],cons:["Larger footprint","Pricier","Maintenance"]},{name:"URPOWER Humidifier",brand:"URPOWER",price:"$35",price_low:35,rating:4.4,reviews:"22,300+",popular:false,budget:true,essential:false,best_for:"Budget large capacity",pros:["5L tank","Affordable","Auto shutoff"],cons:["Plastic quality","Loud","Cleaning needed"]}],
-bottles:[{name:"Philips Avent Anti-Colic",brand:"Philips Avent",price:"$14",price_low:14,rating:4.7,reviews:"32,000+",popular:true,essential:true,best_for:"Reducing gas",pros:["AirFree vent","Wide nipple","Easy clean"],cons:["Nipple collapses","More parts","Pricier"]},{name:"Comotomo Baby Bottle",brand:"Comotomo",price:"$14",price_low:14,rating:4.6,reviews:"28,000+",popular:false,essential:true,best_for:"Breast transition",pros:["Soft silicone","Wide neck","Anti-colic"],cons:["Retains odors","Less durable","Collapses"]},{name:"Dr. Brown's Natural Flow",brand:"Dr. Brown's",price:"$12",price_low:12,rating:4.7,reviews:"41,000+",popular:false,essential:true,best_for:"Colic reduction",pros:["Vent system","Clinically proven","Many options"],cons:["Many small parts","Vent assembly","Bulkier"]},{name:"Tommee Tippee Closer to Nature",brand:"Tommee Tippee",price:"$10",price_low:10,rating:4.6,reviews:"19,000+",popular:false,budget:true,essential:true,best_for:"Budget combo",pros:["Breast-shaped","Anti-colic","Available"],cons:["Fast flow","Leaks","Fewer options"]},{name:"MAM Anti-Colic Bottle",brand:"MAM",price:"$16",price_low:16,rating:4.5,reviews:"12,400+",popular:false,essential:true,best_for:"Self-sterilizing",pros:["SkinSoft silicone","Anti-colic","Easy clean"],cons:["Pricier","Narrow sizing","Limited"]}],
-pumps:[{name:"Spectra S1 Plus",brand:"Spectra",price:"$160",price_low:160,rating:4.7,reviews:"28,000+",popular:true,essential:true,best_for:"Hospital-grade power",pros:["Rechargeable","Closed system","Customizable"],cons:["Bulkier","Tubing disconnects","Loud"]},{name:"Medela Pump In Style",brand:"Medela",price:"$149",price_low:149,rating:4.6,reviews:"19,800+",popular:false,essential:true,best_for:"Portable with power",pros:["2-phase expression","Portable bag","Quiet"],cons:["Battery dies fast","Smaller bottles","Noisy motor"]},{name:"Elvie Pump",brand:"Elvie",price:"$499",price_low:499,rating:4.2,reviews:"6,700+",popular:false,essential:false,best_for:"Hands-free discreet",pros:["100% wearable","Silent","App tracking"],cons:["Very expensive","Weaker suction","Short battery"]},{name:"Momcozy M5 Wearable",brand:"Momcozy",price:"$69",price_low:69,rating:4.3,reviews:"31,000+",popular:false,budget:true,essential:false,best_for:"Budget wearable",pros:["Affordable","9 levels","Quiet"],cons:["Weaker suction","Limited sizing","App glitches"]},{name:"Haakaa Silicone Pump Gen 2",brand:"Haakaa",price:"$13",price_low:13,rating:4.5,reviews:"44,000+",popular:false,budget:true,essential:true,best_for:"Letdown collection",pros:["Very affordable","No electricity","Perfect letdown"],cons:["Passive only","Can fall off","Won't fully drain"]}],
-nursing:[{name:"Boppy Original Feeding Pillow",brand:"Boppy",price:"$39",price_low:39,rating:4.7,reviews:"48,000+",popular:true,budget:true,essential:true,best_for:"Versatile classic",pros:["C-shape recognized","Washable","Multi-use"],cons:["Gap forms","Sold separately","Not plus-size"]},{name:"My Brest Friend Original",brand:"My Brest Friend",price:"$49",price_low:49,rating:4.7,reviews:"14,200+",popular:false,essential:true,best_for:"Firm no-gap",pros:["Buckles firmly","No gap","Pocket"],cons:["Less versatile","Firmer foam","Larger to store"]},{name:"Momcozy Nursing Pillow",brand:"Momcozy",price:"$35",price_low:35,rating:4.6,reviews:"9,100+",popular:false,budget:true,essential:false,best_for:"Adjustable budget",pros:["Adjustable strap","Memory foam","Great value"],cons:["Newer brand","Heat up","Drying time"]},{name:"Leachco Podster Pillow",brand:"Leachco",price:"$42",price_low:42,rating:4.4,reviews:"7,200+",popular:false,essential:false,best_for:"All positioning",pros:["Works many ways","Ergonomic","Washable"],cons:["Bulky shape","Takes space","Learning curve"]},{name:"Brest Friend Deluxe",brand:"Brest Friend",price:"$65",price_low:65,rating:4.6,reviews:"5,800+",popular:false,essential:false,best_for:"Premium comfort",pros:["Premium quality","Perfect fit","Durable"],cons:["Most expensive","Heavy","Large footprint"]}],
-feeding:[{name:"OXO Tot Bottle Brush",brand:"OXO Tot",price:"$10",price_low:10,rating:4.7,reviews:"8,900+",popular:true,budget:true,essential:true,best_for:"All-around brush",pros:["Nipple brush stored","Non-slip grip","Works all bottles"],cons:["Bristles wear","Handle cracks","Pricier"]},{name:"Munchkin Bottle Brush",brand:"Munchkin",price:"$5",price_low:5,rating:4.4,reviews:"9,200+",popular:false,budget:true,essential:true,best_for:"Budget brush",pros:["Very cheap","Functional","Available"],cons:["Less durable","Bristles fall","Basic"]},{name:"Gerber Burp Cloths 8-pack",brand:"Gerber",price:"$18",price_low:18,rating:4.6,reviews:"12,400+",popular:false,budget:true,essential:true,best_for:"Affordable absorbent",pros:["Very absorbent","Multi-pack","Washable"],cons:["Plain design","Thinner","Shrinks"]},{name:"Burt's Bees Organic Burp Cloths",brand:"Burt's Bees",price:"$22",price_low:22,rating:4.5,reviews:"6,100+",popular:false,essential:false,best_for:"Organic option",pros:["Organic","Soft","Safe"],cons:["Pricier","Smaller","Shrinkage"]},{name:"Little Unicorn Cotton Muslin",brand:"Little Unicorn",price:"$26",price_low:26,rating:4.7,reviews:"14,300+",popular:false,essential:false,best_for:"Premium soft",pros:["Ultra soft","Beautiful prints","Durable"],cons:["Most expensive","Multi-use needed","Delicate wash"]}],
-bottlecleaning:[{name:"Philips Avent 3-in-1 Sterilizer",brand:"Philips Avent",price:"$49",price_low:49,rating:4.7,reviews:"18,400+",popular:true,essential:true,best_for:"All-in-one",pros:["Sterilizes & dries","6 bottle capacity","No residue"],cons:["Large footprint","Hot lid","Takes 15 min"]},{name:"Wabi Baby Electric",brand:"Wabi Baby",price:"$139",price_low:139,rating:4.8,reviews:"9,200+",popular:false,essential:false,best_for:"Premium large",pros:["14+ capacity","UV option","HEPA filter"],cons:["Expensive","Very large","Overkill most"]},{name:"Dr. Brown's Microwave Sterilizer",brand:"Dr. Brown's",price:"$18",price_low:18,rating:4.6,reviews:"14,800+",popular:false,budget:true,essential:true,best_for:"Fast budget",pros:["Affordable","2-min cycle","Microwave only"],cons:["No drying","Doesn't fit large","Air dry after"]},{name:"Munchkin Steam Guard",brand:"Munchkin",price:"$15",price_low:15,rating:4.5,reviews:"11,200+",popular:false,budget:true,essential:true,best_for:"Cheapest option",pros:["Very cheap","Compact","Works well"],cons:["No drying","Smaller","Burn risk"]},{name:"Baby Brezza Bottle Washer",brand:"Baby Brezza",price:"$99",price_low:99,rating:4.5,reviews:"6,800+",popular:false,essential:false,best_for:"Automated wash",pros:["Washes & sterilizes","Fully automated","No hand wash"],cons:["Expensive","Requires setup","Large footprint"]}],
-diapers:[{name:"Pampers Swaddlers",brand:"Pampers",price:"$0.20",price_low:40,rating:4.8,reviews:"89,000+",popular:true,essential:true,best_for:"Newborns",pros:["Wetness indicator","Ultra-soft","Great protection"],cons:["Expensive","Scented","Sizing small"]},{name:"Huggies Little Snugglers",brand:"Huggies",price:"$0.18",price_low:36,rating:4.7,reviews:"54,000+",popular:false,essential:true,best_for:"Blowout prevention",pros:["Pocketed waist","GentleAbsorb","Umbilical notch"],cons:["Tabs less stretchy","Scented","Bulkier"]},{name:"Kirkland Signature",brand:"Kirkland",price:"$0.13",price_low:28,rating:4.6,reviews:"22,000+",popular:false,budget:true,essential:true,best_for:"Budget value",pros:["Best price","Good absorbency","Bulk savings"],cons:["No indicator","Fewer sizes","Basic"]},{name:"Honest Company Diapers",brand:"The Honest Company",price:"$0.25",price_low:50,rating:4.5,reviews:"18,000+",popular:false,essential:false,best_for:"Eco-conscious",pros:["Plant-based","No fragrance","Cute patterns"],cons:["Expensive","Weaker overnight","Narrow fit"]},{name:"Mama Bear Gentle Touch",brand:"Mama Bear",price:"$0.15",price_low:30,rating:4.6,reviews:"31,000+",popular:false,budget:false,essential:true,best_for:"Great value",pros:["Good price","Plant-derived","Amazon delivery"],cons:["Not wetness indicator","Sizing varies","Odor report"]}],
-cream:[{name:"Desitin Maximum Strength",brand:"Desitin",price:"$8",price_low:8,rating:4.8,reviews:"42,000+",popular:true,budget:true,essential:true,best_for:"Severe rash",pros:["40% zinc oxide","Works overnight","Pediatrician #1"],cons:["Very thick","Stains fabric","No cloth diapers"]},{name:"Aquaphor Baby Healing",brand:"Aquaphor",price:"$10",price_low:10,rating:4.8,reviews:"38,000+",popular:false,budget:true,essential:true,best_for:"Daily prevention",pros:["Multi-use","Easy apply","Gentle newborns"],cons:["No zinc","Greasy feel","Prevention only"]},{name:"Boudreaux's Butt Paste",brand:"Boudreaux's",price:"$7",price_low:7,rating:4.7,reviews:"21,000+",popular:false,budget:true,essential:true,best_for:"Everyday workhorse",pros:["Easier spread","Fragrance-free","Thick barrier"],cons:["16% zinc only","Clogs cloth","Some dislike smell"]},{name:"Earth Mama Diaper Balm",brand:"Earth Mama",price:"$10",price_low:10,rating:4.6,reviews:"7,200+",popular:false,essential:false,best_for:"Organic cloth-safe",pros:["Certified organic","EWG verified","Cloth safe"],cons:["Less effective","Harder find","Pricier"]},{name:"Mustela Diaper Rash Cream",brand:"Mustela",price:"$12",price_low:12,rating:4.5,reviews:"8,900+",popular:false,essential:false,best_for:"Dermatologist tested",pros:["Soft texture","Fast absorbing","Safe"], cons:["Pricier","Less zinc","Prevention focus"]}],
-wipewarmers:[{name:"Munchkin Warm Glow",brand:"Munchkin",price:"$29",price_low:29,rating:4.5,reviews:"8,200+",popular:true,budget:true,essential:false,best_for:"Most popular",pros:["Night light","Fits standard","Keeps moist"],cons:["Top dry out","Needs cleaning","Outlet needed"]},{name:"Prince Lionheart Warmies",brand:"Prince Lionheart",price:"$34",price_low:34,rating:4.5,reviews:"12,000+",popular:false,essential:false,best_for:"Consistent warmth",pros:["EverFresh system","Top-fill design","Holds full pack"],cons:["Larger footprint","Short cord","Lid flimsy"]},{name:"Hibbent Wipe Warmer",brand:"Hibbent",price:"$22",price_low:22,rating:4.3,reviews:"9,100+",popular:false,budget:true,essential:false,best_for:"Budget option",pros:["Very affordable","Works well","Compact"],cons:["No night light","Drying issue","Basic"]},{name:"Babymoov Thermobaby Warmer",brand:"Babymoov",price:"$35",price_low:35,rating:4.4,reviews:"7,300+",popular:false,essential:false,best_for:"Premium option",pros:["Maintains temp","Ultra quiet","Reliable"],cons:["Expensive","EU brand","Limited US"],},{name:"Summer Infant Wipe Warmer",brand:"Summer Infant",price:"$20",price_low:20,rating:4.2,reviews:"5,600+",popular:false,budget:true,essential:false,best_for:"Basic budget",pros:["Cheap","Functional","Plug play"],cons:["Dries fast","Poor insulation","Flimsy design"]}],
-diaperpail:[{name:"Ubbi Steel Diaper Pail",brand:"Ubbi",price:"$79",price_low:79,rating:4.8,reviews:"18,200+",popular:true,essential:false,best_for:"Best odor control",pros:["Uses any bag","Steel locks odor","Sleek design"],cons:["Most expensive","Heavy","Stiff lid"]},{name:"Playtex Diaper Genie Complete",brand:"Playtex",price:"$39",price_low:39,rating:4.5,reviews:"22,000+",popular:false,budget:true,essential:false,best_for:"Budget classic",pros:["Affordable","7-layer bag","Built-in cutter"],cons:["Proprietary bags","Plastic weak","Foot pedal extra"]},{name:"Munchkin Step",brand:"Munchkin",price:"$25",price_low:25,rating:4.3,reviews:"11,200+",popular:false,budget:true,essential:false,best_for:"Simple budget",pros:["Very cheap","Step open","Easy use"],cons:["No odor lock","Basic design","Short life"]},{name:"Delta Children Diaper Pail",brand:"Delta Children",price:"$45",price_low:45,rating:4.4,reviews:"6,800+",popular:false,essential:false,best_for:"Mid-range",pros:["Good price","Charcoal filter","Works okay"],cons:["Filter replacements","Plastic","Average"]},{name:"Tommee Tippee Sangenic",brand:"Tommee Tippee",price:"$69",price_low:69,rating:4.6,reviews:"9,400+",popular:false,essential:false,best_for:"Tech-forward",pros:["Twist & seal","Minimal smell","Very popular"],cons:["Proprietary bags","Pricey refills","Bulky"]}],
-changingpad:[{name:"Keekaroo Peanut Changing Pad",brand:"Keekaroo",price:"$79",price_low:79,rating:4.7,reviews:"9,100+",popular:true,essential:true,best_for:"Wipe-clean",pros:["Fully waterproof","No cover needed","Contoured"],cons:["Expensive","Firm","No strap"]},{name:"Summer Infant Contoured",brand:"Summer Infant",price:"$24",price_low:24,rating:4.5,reviews:"16,400+",popular:false,budget:true,essential:true,best_for:"Budget standard",pros:["Very affordable","Contoured","Waterproof cover"],cons:["Cover washes","Less durable","Basic"]},{name:"Graco Contour Changing Pad",brand:"Graco",price:"$26",price_low:26,rating:4.4,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Reliable cheap",pros:["Affordable","Contoured safe","Easy clean"],cons:["Thin pad","Basic design","Wear over time"]},{name:"Delta Children Changing Table Pad",brand:"Delta Children",price:"$35",price_low:35,rating:4.3,reviews:"5,100+",popular:false,essential:true,best_for:"Mid-range pad",pros:["Good price","Waterproof","Safe sides"],cons:["Average quality","Cover needed","Limited"]},{name:"Foundations Infant Pad",brand:"Foundations",price:"$42",price_low:42,rating:4.6,reviews:"3,800+",popular:false,essential:true,best_for:"Commercial quality",pros:["Hospital grade","Antimicrobial","Durable"],cons:["Pricier","Cover extra","Limited colors"]}],
-bathtub:[{name:"Frida Baby 4-in-1 Grow",brand:"Frida Baby",price:"$39",price_low:39,rating:4.7,reviews:"11,200+",popular:true,essential:true,best_for:"Multi-stage",pros:["4 configurations","Sling included","Works sink & tub"],cons:["Bulky storage","Sling tricky","Pricier"]},{name:"Blooming Bath Lotus",brand:"Blooming Bath",price:"$34",price_low:34,rating:4.5,reviews:"8,800+",popular:false,essential:false,best_for:"Sink newborn",pros:["Soft flower","Washable","No plastic"],cons:["Sink only","Outgrown fast","Slow dry"]},{name:"Summer Infant My Fun Tub",brand:"Summer Infant",price:"$19",price_low:19,rating:4.4,reviews:"9,200+",popular:false,budget:true,essential:true,best_for:"No-frills",pros:["Affordable","Works anywhere","Drain plug"],cons:["Minimal support","Plastic feel","No sling"]},{name:"Munchkin White Hot Tub",brand:"Munchkin",price:"$25",price_low:25,rating:4.3,reviews:"6,100+",popular:false,budget:true,essential:true,best_for:"Budget newborn",pros:["Cheap","Color changes","Compact"],cons:["Small size","Limited use","Plastic"]}],
-healthkit:[{name:"Frida Baby NoseFrida",brand:"Frida Baby",price:"$15",price_low:15,rating:4.8,reviews:"42,000+",popular:true,budget:true,essential:true,best_for:"Congestion relief",pros:["Most effective","Pediatrician approved","Hygienic"],cons:["Concept takes time","Filter replacement","Loud"]},{name:"NailFrida SnipperClipper",brand:"Frida Baby",price:"$14",price_low:14,rating:4.8,reviews:"18,400+",popular:false,budget:true,essential:true,best_for:"Safe nail trimming",pros:["Spy-hole window","Prevents skin cuts","Includes file"],cons:["Fiddly hands","Needs practice"]},{name:"Frida Baby TempoRite Thermometer",brand:"Frida Baby",price:"$29",price_low:29,rating:4.6,reviews:"8,200+",popular:false,essential:true,best_for:"Fast temps",pros:["10-second read","Color alerts","Rectal & underarm"],cons:["Rectal intimates","Needs covers","Pricier"]},{name:"Safety 1st Healthcare Kit",brand:"Safety 1st",price:"$22",price_low:22,rating:4.4,reviews:"14,200+",popular:false,budget:true,essential:true,best_for:"All-in-one",pros:["Includes all basics","Very affordable","Carry case"],cons:["Basic items","Thermometer underarm only","Less precise"]},{name:"Dreambaby Grooming Kit",brand:"Dreambaby",price:"$12",price_low:12,rating:4.5,reviews:"9,800+",popular:false,budget:true,essential:false,best_for:"Budget complete",pros:["Very cheap","Multiple tools","Travel case"],cons:["Poor quality","Dull blades","Limited durability"]}],
+strollers:[{name:"UPPAbaby VISTA V3",brand:"UPPAbaby",price:"$1,099",price_low:1099,rating:4.9,reviews:"9,200+",popular:true,essential:true,best_for:"Growing families",pros:["Converts to double","Huge basket","Comfortable"],cons:["Heavy","Expensive","Bulky"]},{name:"UPPAbaby CRUZ V2",brand:"UPPAbaby",price:"$749",price_low:749,rating:4.8,reviews:"5,100+",popular:false,essential:true,best_for:"City stroller",pros:["Lighter","Compact","Great maneuverability"],cons:["No double","Smaller basket","Less features"]},{name:"Nuna MIXX Next",brand:"Nuna",price:"$799",price_low:799,rating:4.7,reviews:"3,400+",popular:false,essential:true,best_for:"Everyday use",pros:["Magnetic buckle","Reversible seat","Safe fabrics"],cons:["Expensive","Limited colors","Heavy"]},{name:"Bugaboo Fox 5",brand:"Bugaboo",price:"$1,299",price_low:1299,rating:4.7,reviews:"4,100+",popular:false,essential:true,best_for:"Smooth ride",pros:["Best suspension","Reversible seat","Premium build"],cons:["Most expensive","Accessories extra","Heavy"]},{name:"Graco Modes Nest",brand:"Graco",price:"$299",price_low:299,rating:4.6,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Budget value",pros:["Great price","Converts modes","Car seat compat"],cons:["Heavier","Less compact","Fewer features"]}],
+bassinets:[{name:"SNOO Smart Sleeper",brand:"Happiest Baby",price:"$1,695",price_low:1695,rating:4.6,reviews:"5,900+",popular:true,essential:false,best_for:"Smart sleep",pros:["Auto-responds","App tracking","Weaning mode"],cons:["Expensive","Short use","Requires wifi"]},{name:"Halo BassiNest Swivel",brand:"Halo",price:"$269",price_low:269,rating:4.4,reviews:"12,100+",popular:false,essential:true,best_for:"Bedside access",pros:["Swivels 360°","Drop-side","Vibration"],cons:["No motion","Basic","Limited use"]},{name:"Graco Dream Suite",brand:"Graco",price:"$149",price_low:149,rating:4.3,reviews:"5,100+",popular:false,budget:true,essential:true,best_for:"Budget",pros:["Affordable","Safe","Converts"],cons:["Plastic feel","Weak vibration","Short use"]},{name:"4moms mamaRoo Sleep",brand:"4moms",price:"$379",price_low:379,rating:4.3,reviews:"4,200+",popular:false,essential:false,best_for:"Motion lovers",pros:["5 motions","App control","Breathable mesh"],cons:["Some reject","Pricey","Short use"]},{name:"Babyletto Lolly 3-in-1",brand:"Babyletto",price:"$499",price_low:499,rating:4.8,reviews:"3,700+",popular:false,essential:true,best_for:"Long-term",pros:["Converts to toddler","Eco certified","Beautiful design"],cons:["Mattress separate","Not bassinet","Larger footprint"]}],
+carseats:[{name:"Chicco KeyFit 35",brand:"Chicco",price:"$199",price_low:199,rating:4.8,reviews:"22,000+",popular:true,essential:true,best_for:"Easiest install",pros:["SuperCinch LATCH","Wide nipple","Great protection"],cons:["Heavy","Outgrown quickly","Small canopy"]},{name:"Graco 4Ever DLX",brand:"Graco",price:"$279",price_low:279,rating:4.7,reviews:"18,500+",popular:false,essential:true,best_for:"Long-lasting",pros:["Birth to 120 lbs","4 modes","Great value"],cons:["Bulky","Hard to transfer","Heavy"]},{name:"UPPAbaby MESA V2",brand:"UPPAbaby",price:"$399",price_low:399,rating:4.8,reviews:"6,300+",popular:false,essential:true,best_for:"UPPAbaby stroller",pros:["Click-in install","SMARTSecure system","Seamless pairing"],cons:["Very expensive","Outgrown quickly","Heavy"]},{name:"Britax One4Life",brand:"Britax",price:"$399",price_low:399,rating:4.7,reviews:"9,100+",popular:false,essential:true,best_for:"Safety first",pros:["ClickTight install","Anti-rebound bar","Best ratings"],cons:["Expensive","Very heavy","Takes space"]},{name:"Evenflo EveryFit 4-in-1",brand:"Evenflo",price:"$139",price_low:139,rating:4.5,reviews:"8,200+",popular:false,budget:true,essential:true,best_for:"Budget all-in-one",pros:["Very affordable","Good weight limits","Safe"],cons:["Less padding","Cheap feel","Fewer features"]}],
+whitenoise:[{name:"Hatch Rest 2nd Gen",brand:"Hatch",price:"$69",price_low:69,rating:4.7,reviews:"14,800+",popular:true,essential:false,best_for:"All-in-one",pros:["App-controlled","Time-to-rise cues","Night light + sound"],cons:["WiFi required","Subscription for full","Pricier"]},{name:"Marpac Dohm Classic",brand:"Marpac",price:"$44",price_low:44,rating:4.6,reviews:"31,000+",popular:false,essential:false,best_for:"True white noise",pros:["Real fan motor","Two speeds","Sleep favorite"],cons:["No app","White noise only","Plug-in only"]},{name:"Dreamegg D1",brand:"Dreamegg",price:"$24",price_low:24,rating:4.6,reviews:"16,400+",popular:false,budget:true,essential:false,best_for:"Budget option",pros:["Affordable","11 sounds","Night light"],cons:["No app","Digital loop","Basic"]},{name:"Frida Baby 3-in-1",brand:"Frida Baby",price:"$59",price_low:59,rating:4.6,reviews:"7,200+",popular:false,essential:false,best_for:"Nursery all-in-one",pros:["Cool mist","Nightlight","Diffuser"],cons:["Smaller tank","Needs refills","Not for under 2"]},{name:"Pure Enrichment MistAire",brand:"Pure Enrichment",price:"$29",price_low:29,rating:4.5,reviews:"34,000+",popular:false,budget:true,essential:false,best_for:"Budget humidifier",pros:["Very affordable","Night light","Auto shutoff"],cons:["Small tank","Refills often","Basic"]}],
+swaddles:[{name:"Aden + Anais Classic",brand:"Aden + Anais",price:"$40",price_low:40,rating:4.7,reviews:"28,000+",popular:true,essential:true,best_for:"Versatile classic",pros:["Breathable","Gets softer","Multi-use"],cons:["Technique needed","Can escape","Pricier"]},{name:"Halo SleepSack Swaddle",brand:"Halo",price:"$24",price_low:24,rating:4.6,reviews:"32,000+",popular:false,essential:true,best_for:"Foolproof velcro",pros:["No wrapping needed","3-way config","Easy"],cons:["Can undo velcro","Less breathable","Sizing small"]},{name:"Love to Dream Swaddle UP",brand:"Love to Dream",price:"$34",price_low:34,rating:4.7,reviews:"21,000+",popular:false,essential:false,best_for:"Arms-up position",pros:["Arms-up natural","Zipper closure","No wrapping"],cons:["Arms-up only","Pricier","Narrow sizing"]},{name:"Kyte Baby Sleep Bag",brand:"Kyte Baby",price:"$36",price_low:36,rating:4.8,reviews:"11,200+",popular:false,essential:false,best_for:"Softest post-swaddle",pros:["Ultra-soft bamboo","Many TOGs","Beautiful colors"],cons:["Pricier","Post-swaddle only","Hand wash"]},{name:"Nested Bean Zen",brand:"Nested Bean",price:"$50",price_low:50,rating:4.6,reviews:"8,900+",popular:false,essential:false,best_for:"Weighted swaddle",pros:["Gentle weighted zone","Reduces startle","Cozy"],cons:["Temperature sensitive","Pricier","One use stage"]}],
+humidifier:[{name:"Frida Baby 3-in-1",brand:"Frida Baby",price:"$59",price_low:59,rating:4.6,reviews:"7,200+",popular:true,essential:false,best_for:"Nursery + light",pros:["Cool mist","Night light","Diffuser"],cons:["Smaller tank","Needs refills","Not for under 2"]},{name:"Crane Adorable",brand:"Crane",price:"$39",price_low:39,rating:4.5,reviews:"19,400+",popular:false,essential:false,best_for:"Cute design",pros:["Animal designs","500 sq ft","Filter-free"],cons:["Small tank","No nightlight","Distilled water"]},{name:"Pure Enrichment MistAire",brand:"Pure Enrichment",price:"$29",price_low:29,rating:4.5,reviews:"34,000+",popular:false,budget:true,essential:false,best_for:"Budget starter",pros:["Affordable","Night light","Auto shutoff"],cons:["Small tank","Refills often","Basic"]},{name:"Levoit Dual 150",brand:"Levoit",price:"$79",price_low:79,rating:4.7,reviews:"15,600+",popular:false,essential:false,best_for:"Large coverage",pros:["600 sq ft","Whisper quiet","Covers large"],cons:["Larger footprint","Pricier","Maintenance"]},{name:"URPOWER Humidifier",brand:"URPOWER",price:"$35",price_low:35,rating:4.4,reviews:"22,300+",popular:false,budget:true,essential:false,best_for:"Budget large capacity",pros:["5L tank","Affordable","Auto shutoff"],cons:["Plastic quality","Loud","Cleaning needed"]}],
+bottles:[{name:"Philips Avent Anti-Colic",brand:"Philips Avent",price:"$14",price_low:14,rating:4.7,reviews:"32,000+",popular:true,essential:true,best_for:"Reducing gas",pros:["AirFree vent","Wide nipple","Easy clean"],cons:["Nipple collapses","More parts","Pricier"]},{name:"Comotomo Baby Bottle",brand:"Comotomo",price:"$14",price_low:14,rating:4.6,reviews:"28,000+",popular:false,essential:true,best_for:"Breast transition",pros:["Soft silicone","Wide neck","Anti-colic"],cons:["Retains odors","Less durable","Collapses"]},{name:"Dr. Brown's Natural Flow",brand:"Dr. Brown's",price:"$12",price_low:12,rating:4.7,reviews:"41,000+",popular:false,essential:true,best_for:"Colic reduction",pros:["Vent system","Clinically proven","Many options"],cons:["Many small parts","Vent assembly","Bulkier"]},{name:"Tommee Tippee",brand:"Tommee Tippee",price:"$10",price_low:10,rating:4.6,reviews:"19,000+",popular:false,budget:true,essential:true,best_for:"Budget combo",pros:["Breast-shaped","Anti-colic","Available"],cons:["Fast flow","Leaks","Fewer options"]},{name:"MAM Anti-Colic",brand:"MAM",price:"$16",price_low:16,rating:4.5,reviews:"12,400+",popular:false,essential:true,best_for:"Self-sterilizing",pros:["SkinSoft silicone","Anti-colic","Easy clean"],cons:["Pricier","Narrow sizing","Limited"]}],
+pumps:[{name:"Spectra S1 Plus",brand:"Spectra",price:"$160",price_low:160,rating:4.7,reviews:"28,000+",popular:true,essential:true,best_for:"Hospital-grade power",pros:["Rechargeable","Closed system","Customizable"],cons:["Bulkier","Tubing disconnects","Loud"]},{name:"Medela Pump In Style",brand:"Medela",price:"$149",price_low:149,rating:4.6,reviews:"19,800+",popular:false,essential:true,best_for:"Portable with power",pros:["2-phase expression","Portable bag","Quiet"],cons:["Battery dies fast","Smaller bottles","Motor noisy"]},{name:"Elvie Pump",brand:"Elvie",price:"$499",price_low:499,rating:4.2,reviews:"6,700+",popular:false,essential:false,best_for:"Hands-free discreet",pros:["100% wearable","Silent","App tracking"],cons:["Very expensive","Weaker suction","Short battery"]},{name:"Momcozy M5 Wearable",brand:"Momcozy",price:"$69",price_low:69,rating:4.3,reviews:"31,000+",popular:false,budget:true,essential:false,best_for:"Budget wearable",pros:["Affordable","9 levels","Quiet"],cons:["Weaker suction","Limited sizing","App glitches"]},{name:"Haakaa Silicone Gen 2",brand:"Haakaa",price:"$13",price_low:13,rating:4.5,reviews:"44,000+",popular:false,budget:true,essential:true,best_for:"Letdown collection",pros:["Very affordable","No electricity","Perfect letdown"],cons:["Passive only","Can fall off","Won't fully drain"]}],
+nursing:[{name:"Boppy Original",brand:"Boppy",price:"$39",price_low:39,rating:4.7,reviews:"48,000+",popular:true,budget:true,essential:true,best_for:"Versatile classic",pros:["C-shape recognized","Washable","Multi-use"],cons:["Gap forms","Sold separately","Not plus-size"]},{name:"My Brest Friend Original",brand:"My Brest Friend",price:"$49",price_low:49,rating:4.7,reviews:"14,200+",popular:false,essential:true,best_for:"Firm no-gap",pros:["Buckles firmly","No gap","Pocket"],cons:["Less versatile","Firmer foam","Larger to store"]},{name:"Momcozy Nursing Pillow",brand:"Momcozy",price:"$35",price_low:35,rating:4.6,reviews:"9,100+",popular:false,budget:true,essential:false,best_for:"Adjustable budget",pros:["Adjustable strap","Memory foam","Great value"],cons:["Newer brand","Heat up","Drying time"]},{name:"Leachco Podster",brand:"Leachco",price:"$42",price_low:42,rating:4.4,reviews:"7,200+",popular:false,essential:false,best_for:"All positioning",pros:["Works many ways","Ergonomic","Washable"],cons:["Bulky shape","Takes space","Learning curve"]},{name:"Brest Friend Deluxe",brand:"Brest Friend",price:"$65",price_low:65,rating:4.6,reviews:"5,800+",popular:false,essential:false,best_for:"Premium comfort",pros:["Premium quality","Perfect fit","Durable"],cons:["Most expensive","Heavy","Large footprint"]}],
+feeding:[{name:"OXO Tot Bottle Brush",brand:"OXO Tot",price:"$10",price_low:10,rating:4.7,reviews:"8,900+",popular:true,budget:true,essential:true,best_for:"All-around brush",pros:["Nipple brush stored","Non-slip grip","Works all bottles"],cons:["Bristles wear","Handle cracks","Pricier"]},{name:"Munchkin Bottle Brush",brand:"Munchkin",price:"$5",price_low:5,rating:4.4,reviews:"9,200+",popular:false,budget:true,essential:true,best_for:"Budget brush",pros:["Very cheap","Functional","Available"],cons:["Less durable","Bristles fall","Basic"]},{name:"Gerber Burp Cloths 8-pack",brand:"Gerber",price:"$18",price_low:18,rating:4.6,reviews:"12,400+",popular:false,budget:true,essential:true,best_for:"Affordable absorbent",pros:["Very absorbent","Multi-pack","Washable"],cons:["Plain design","Thinner","Shrinks"]},{name:"Burt's Bees Organic",brand:"Burt's Bees",price:"$22",price_low:22,rating:4.5,reviews:"6,100+",popular:false,essential:false,best_for:"Organic option",pros:["Organic","Soft","Safe"],cons:["Pricier","Smaller","Shrinkage"]},{name:"Little Unicorn Cotton",brand:"Little Unicorn",price:"$26",price_low:26,rating:4.7,reviews:"14,300+",popular:false,essential:false,best_for:"Premium soft",pros:["Ultra soft","Beautiful prints","Durable"],cons:["Most expensive","Multi-use needed","Delicate wash"]}],
+bottlecleaning:[{name:"Philips Avent 3-in-1",brand:"Philips Avent",price:"$49",price_low:49,rating:4.7,reviews:"18,400+",popular:true,essential:true,best_for:"All-in-one",pros:["Sterilizes & dries","6 bottle capacity","No residue"],cons:["Large footprint","Hot lid","Takes 15 min"]},{name:"Wabi Baby Electric",brand:"Wabi Baby",price:"$139",price_low:139,rating:4.8,reviews:"9,200+",popular:false,essential:false,best_for:"Premium large",pros:["14+ capacity","UV option","HEPA filter"],cons:["Expensive","Very large","Overkill most"]},{name:"Dr. Brown's Microwave",brand:"Dr. Brown's",price:"$18",price_low:18,rating:4.6,reviews:"14,800+",popular:false,budget:true,essential:true,best_for:"Fast budget",pros:["Affordable","2-min cycle","Microwave only"],cons:["No drying","Doesn't fit large","Air dry after"]},{name:"Munchkin Steam Guard",brand:"Munchkin",price:"$15",price_low:15,rating:4.5,reviews:"11,200+",popular:false,budget:true,essential:true,best_for:"Cheapest option",pros:["Very cheap","Compact","Works well"],cons:["No drying","Smaller","Burn risk"]},{name:"Baby Brezza Bottle Washer",brand:"Baby Brezza",price:"$99",price_low:99,rating:4.5,reviews:"6,800+",popular:false,essential:false,best_for:"Automated wash",pros:["Washes & sterilizes","Fully automated","No hand wash"],cons:["Expensive","Requires setup","Large footprint"]}],
+diapers:[{name:"Pampers Swaddlers",brand:"Pampers",price:"$0.20",price_low:40,rating:4.8,reviews:"89,000+",popular:true,essential:true,best_for:"Newborns",pros:["Wetness indicator","Ultra-soft","Great protection"],cons:["Expensive","Scented","Sizing small"]},{name:"Huggies Little Snugglers",brand:"Huggies",price:"$0.18",price_low:36,rating:4.7,reviews:"54,000+",popular:false,essential:true,best_for:"Blowout prevention",pros:["Pocketed waist","GentleAbsorb","Umbilical notch"],cons:["Tabs less stretchy","Scented","Bulkier"]},{name:"Kirkland Signature",brand:"Kirkland",price:"$0.13",price_low:28,rating:4.6,reviews:"22,000+",popular:false,budget:true,essential:true,best_for:"Budget value",pros:["Best price","Good absorbency","Bulk savings"],cons:["No indicator","Fewer sizes","Basic"]},{name:"Honest Company Diapers",brand:"The Honest Company",price:"$0.25",price_low:50,rating:4.5,reviews:"18,000+",popular:false,essential:false,best_for:"Eco-conscious",pros:["Plant-based","No fragrance","Cute patterns"],cons:["Expensive","Weaker overnight","Narrow fit"]},{name:"Mama Bear Gentle Touch",brand:"Mama Bear",price:"$0.15",price_low:30,rating:4.6,reviews:"31,000+",popular:false,budget:false,essential:true,best_for:"Great value",pros:["Good price","Plant-derived","Amazon delivery"],cons:["No indicator","Sizing varies","Odor report"]}],
+cream:[{name:"Desitin Maximum Strength",brand:"Desitin",price:"$8",price_low:8,rating:4.8,reviews:"42,000+",popular:true,budget:true,essential:true,best_for:"Severe rash",pros:["40% zinc oxide","Works overnight","Pediatrician #1"],cons:["Very thick","Stains fabric","No cloth diapers"]},{name:"Aquaphor Baby Healing",brand:"Aquaphor",price:"$10",price_low:10,rating:4.8,reviews:"38,000+",popular:false,budget:true,essential:true,best_for:"Daily prevention",pros:["Multi-use","Easy apply","Gentle newborns"],cons:["No zinc","Greasy feel","Prevention only"]},{name:"Boudreaux's Butt Paste",brand:"Boudreaux's",price:"$7",price_low:7,rating:4.7,reviews:"21,000+",popular:false,budget:true,essential:true,best_for:"Everyday workhorse",pros:["Easier spread","Fragrance-free","Thick barrier"],cons:["16% zinc only","Clogs cloth","Some dislike smell"]},{name:"Earth Mama Diaper Balm",brand:"Earth Mama",price:"$10",price_low:10,rating:4.6,reviews:"7,200+",popular:false,essential:false,best_for:"Organic cloth-safe",pros:["Certified organic","EWG verified","Cloth safe"],cons:["Less effective","Harder find","Pricier"]},{name:"Mustela Diaper Rash",brand:"Mustela",price:"$12",price_low:12,rating:4.5,reviews:"8,900+",popular:false,essential:false,best_for:"Dermatologist tested",pros:["Soft texture","Fast absorbing","Safe"],cons:["Pricier","Less zinc","Prevention focus"]}],
+wipewarmers:[{name:"Munchkin Warm Glow",brand:"Munchkin",price:"$29",price_low:29,rating:4.5,reviews:"8,200+",popular:true,budget:true,essential:false,best_for:"Most popular",pros:["Night light","Fits standard","Keeps moist"],cons:["Top dry out","Needs cleaning","Outlet needed"]},{name:"Prince Lionheart Warmies",brand:"Prince Lionheart",price:"$34",price_low:34,rating:4.5,reviews:"12,000+",popular:false,essential:false,best_for:"Consistent warmth",pros:["EverFresh system","Top-fill design","Holds full pack"],cons:["Larger footprint","Short cord","Lid flimsy"]},{name:"Hibbent Wipe Warmer",brand:"Hibbent",price:"$22",price_low:22,rating:4.3,reviews:"9,100+",popular:false,budget:true,essential:false,best_for:"Budget option",pros:["Very affordable","Works well","Compact"],cons:["No night light","Drying issue","Basic"]},{name:"Babymoov Thermobaby",brand:"Babymoov",price:"$35",price_low:35,rating:4.4,reviews:"7,300+",popular:false,essential:false,best_for:"Premium option",pros:["Maintains temp","Ultra quiet","Reliable"],cons:["Expensive","EU brand","Limited US"]},{name:"Summer Infant Wipe",brand:"Summer Infant",price:"$20",price_low:20,rating:4.2,reviews:"5,600+",popular:false,budget:true,essential:false,best_for:"Basic budget",pros:["Cheap","Functional","Plug play"],cons:["Dries fast","Poor insulation","Flimsy design"]}],
+diaperpail:[{name:"Ubbi Steel Diaper Pail",brand:"Ubbi",price:"$79",price_low:79,rating:4.8,reviews:"18,200+",popular:true,essential:false,best_for:"Best odor control",pros:["Uses any bag","Steel locks odor","Sleek design"],cons:["Most expensive","Heavy","Stiff lid"]},{name:"Playtex Diaper Genie",brand:"Playtex",price:"$39",price_low:39,rating:4.5,reviews:"22,000+",popular:false,budget:true,essential:false,best_for:"Budget classic",pros:["Affordable","7-layer bag","Built-in cutter"],cons:["Proprietary bags","Plastic weak","Foot pedal extra"]},{name:"Munchkin Step",brand:"Munchkin",price:"$25",price_low:25,rating:4.3,reviews:"11,200+",popular:false,budget:true,essential:false,best_for:"Simple budget",pros:["Very cheap","Step open","Easy use"],cons:["No odor lock","Basic design","Short life"]},{name:"Delta Children Diaper Pail",brand:"Delta Children",price:"$45",price_low:45,rating:4.4,reviews:"6,800+",popular:false,essential:false,best_for:"Mid-range",pros:["Good price","Charcoal filter","Works okay"],cons:["Filter replacements","Plastic","Average"]},{name:"Tommee Tippee Sangenic",brand:"Tommee Tippee",price:"$69",price_low:69,rating:4.6,reviews:"9,400+",popular:false,essential:false,best_for:"Tech-forward",pros:["Twist & seal","Minimal smell","Very popular"],cons:["Proprietary bags","Pricey refills","Bulky"]}],
+changingpad:[{name:"Keekaroo Peanut",brand:"Keekaroo",price:"$79",price_low:79,rating:4.7,reviews:"9,100+",popular:true,essential:true,best_for:"Wipe-clean",pros:["Fully waterproof","No cover needed","Contoured"],cons:["Expensive","Firm","No strap"]},{name:"Summer Infant Contoured",brand:"Summer Infant",price:"$24",price_low:24,rating:4.5,reviews:"16,400+",popular:false,budget:true,essential:true,best_for:"Budget standard",pros:["Very affordable","Contoured","Waterproof cover"],cons:["Cover washes","Less durable","Basic"]},{name:"Graco Contour Pad",brand:"Graco",price:"$26",price_low:26,rating:4.4,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Reliable cheap",pros:["Affordable","Contoured safe","Easy clean"],cons:["Thin pad","Basic design","Wear over time"]},{name:"Delta Children Changing Table",brand:"Delta Children",price:"$35",price_low:35,rating:4.3,reviews:"5,100+",popular:false,essential:true,best_for:"Mid-range pad",pros:["Good price","Waterproof","Safe sides"],cons:["Average quality","Cover needed","Limited"]},{name:"Foundations Infant Pad",brand:"Foundations",price:"$42",price_low:42,rating:4.6,reviews:"3,800+",popular:false,essential:true,best_for:"Commercial quality",pros:["Hospital grade","Antimicrobial","Durable"],cons:["Pricier","Cover extra","Limited colors"]}],
+bathtub:[{name:"Frida Baby 4-in-1",brand:"Frida Baby",price:"$39",price_low:39,rating:4.7,reviews:"11,200+",popular:true,essential:true,best_for:"Multi-stage",pros:["4 configurations","Sling included","Works sink & tub"],cons:["Bulky storage","Sling tricky","Pricier"]},{name:"Blooming Bath Lotus",brand:"Blooming Bath",price:"$34",price_low:34,rating:4.5,reviews:"8,800+",popular:false,essential:false,best_for:"Sink newborn",pros:["Soft flower","Washable","No plastic"],cons:["Sink only","Outgrown fast","Slow dry"]},{name:"Summer Infant My Fun",brand:"Summer Infant",price:"$19",price_low:19,rating:4.4,reviews:"9,200+",popular:false,budget:true,essential:true,best_for:"No-frills",pros:["Affordable","Works anywhere","Drain plug"],cons:["Minimal support","Plastic feel","No sling"]},{name:"Munchkin White Hot Tub",brand:"Munchkin",price:"$25",price_low:25,rating:4.3,reviews:"6,100+",popular:false,budget:true,essential:true,best_for:"Budget newborn",pros:["Cheap","Color changes","Compact"],cons:["Small size","Limited use","Plastic"]}],
+healthkit:[{name:"Frida Baby NoseFrida",brand:"Frida Baby",price:"$15",price_low:15,rating:4.8,reviews:"42,000+",popular:true,budget:true,essential:true,best_for:"Congestion relief",pros:["Most effective","Pediatrician approved","Hygienic"],cons:["Concept takes time","Filter replacement","Loud"]},{name:"NailFrida SnipperClipper",brand:"Frida Baby",price:"$14",price_low:14,rating:4.8,reviews:"18,400+",popular:false,budget:true,essential:true,best_for:"Safe nail trimming",pros:["Spy-hole window","Prevents skin cuts","Includes file"],cons:["Fiddly hands","Needs practice"]},{name:"Frida Baby TempoRite",brand:"Frida Baby",price:"$29",price_low:29,rating:4.6,reviews:"8,200+",popular:false,essential:true,best_for:"Fast temps",pros:["10-second read","Color alerts","Rectal & underarm"],cons:["Rectal intimates","Needs covers","Pricier"]},{name:"Safety 1st Healthcare Kit",brand:"Safety 1st",price:"$22",price_low:22,rating:4.4,reviews:"14,200+",popular:false,budget:true,essential:true,best_for:"All-in-one",pros:["Includes all basics","Very affordable","Carry case"],cons:["Basic items","Thermometer underarm only","Less precise"]},{name:"Dreambaby Grooming Kit",brand:"Dreambaby",price:"$12",price_low:12,rating:4.5,reviews:"9,800+",popular:false,budget:true,essential:false,best_for:"Budget complete",pros:["Very cheap","Multiple tools","Travel case"],cons:["Poor quality","Dull blades","Limited durability"]}],
 monitors:[{name:"Nanit Pro Camera",brand:"Nanit",price:"$299",price_low:299,rating:4.6,reviews:"9,800+",popular:true,essential:true,best_for:"Data-driven",pros:["Breathing monitor","Sleep analytics","HD video"],cons:["Subscription","WiFi required","Expensive"]},{name:"Infant Optics DXR-8 Pro",brand:"Infant Optics",price:"$149",price_low:149,rating:4.5,reviews:"24,000+",popular:false,essential:true,best_for:"No WiFi",pros:["No WiFi needed","Interchangeable lens","Long battery"],cons:["Lower res","No app","Limited range"]},{name:"Eufy SpaceView Pro",brand:"Eufy",price:"$139",price_low:139,rating:4.6,reviews:"12,400+",popular:false,budget:true,essential:true,best_for:"Budget video",pros:["5-inch screen","720° pan","No subscription"],cons:["No app","WiFi separate","Bulky screen"]},{name:"Vtech Safe & Sound",brand:"Vtech",price:"$79",price_low:79,rating:4.4,reviews:"18,900+",popular:false,budget:true,essential:true,best_for:"Budget simple",pros:["Cheap","Temperature sensor","Lullabies"],cons:["Lower video quality","Limited range","Basic"]},{name:"Motorola Halo+",brand:"Motorola",price:"$299",price_low:299,rating:4.5,reviews:"7,600+",popular:false,essential:true,best_for:"WiFi with ceiling light",pros:["App control","Night light","Fan control"],cons:["Expensive","Requires WiFi","Ceiling mount"]}],
-swings:[{name:"4moms mamaRoo 4",brand:"4moms",price:"$239",price_low:239,rating:4.4,reviews:"13,200+",popular:true,essential:false,best_for:"Varied motion",pros:["5 motions","Bluetooth app","Sleek design"],cons:["Some reject","Pricey","Not fully flat"]},{name:"Graco Sense2Soothe Swing",brand:"Graco",price:"$169",price_low:169,rating:4.5,reviews:"8,300+",popular:false,essential:false,best_for:"Cry-detect soothing",pros:["Auto cry detect","18 sounds","Folds flat"],cons:["Bulky","Battery drains","Swing only"]},{name:"Graco DuetSoothe Swing",brand:"Graco",price:"$109",price_low:109,rating:4.4,reviews:"11,800+",popular:false,budget:true,essential:false,best_for:"Swing + rocker",pros:["2 in 1","6 speeds","Affordable"],cons:["Bulky storage","Average quality","Limited"]},{name:"Fisher-Price Deluxe Bouncer",brand:"Fisher-Price",price:"$44",price_low:44,rating:4.5,reviews:"19,000+",popular:false,budget:true,essential:false,best_for:"Budget bouncer",pros:["Cheap","Vibrations","Toy bar"],cons:["Battery drain","Basic pad","Manual only"]},{name:"Ingenuity SimpliComfort Auto-Swing",brand:"Ingenuity",price:"$99",price_low:99,rating:4.3,reviews:"10,200+",popular:false,budget:true,essential:false,best_for:"Budget auto-swing",pros:["Affordable swing","5 speeds","Gentle"],cons:["Smaller","Less features","Lower quality"]}],
-carriers:[{name:"Ergobaby Omni 360",brand:"Ergobaby",price:"$180",price_low:180,rating:4.8,reviews:"12,400+",popular:true,essential:false,best_for:"All-position",pros:["4 positions","Newborn ready","Lumbar support"],cons:["Pricier","Bulkier","Warm in summer"]},{name:"Solly Baby Wrap",brand:"Solly Baby",price:"$78",price_low:78,rating:4.7,reviews:"8,900+",popular:false,essential:false,best_for:"Newborn snuggle",pros:["Ultra soft","Newborn cocoon","Beautiful"],cons:["Learning curve","Not for heavy","Hand wash"]},{name:"Infantino Flip 4-in-1",brand:"Infantino",price:"$29",price_low:29,rating:4.4,reviews:"19,000+",popular:false,budget:true,essential:false,best_for:"Budget carrier",pros:["Very affordable","4 positions","Included insert"],cons:["Less padded","Lower comfort","Budget quality"]},{name:"LILLEbaby Complete All Seasons",brand:"LILLEbaby",price:"$160",price_low:160,rating:4.6,reviews:"8,100+",popular:false,essential:false,best_for:"Premium ergonomic",pros:["6 positions","Mesh panels","Premium feel"],cons:["Expensive","Steeper learning","Bulky when off"]},{name:"Boba X Baby Carrier",brand:"Boba",price:"$119",price_low:119,rating:4.5,reviews:"6,200+",popular:false,essential:false,best_for:"Mid-range quality",pros:["Good price","Buckle carriers","Comfortable"],cons:["Less features","Learning needed","Average material"]}],
-nursery:[{name:"DaVinci Olive Glider & Ottoman",brand:"DaVinci",price:"$299",price_low:299,rating:4.7,reviews:"4,100+",popular:true,essential:true,best_for:"Mid-range glider",pros:["Smooth gliding","Ottoman included","GREENGUARD"],cons:["Pricier","Limited colors","Assembly time"]},{name:"IKEA POÄNG Chair",brand:"IKEA",price:"$149",price_low:149,rating:4.6,reviews:"8,200+",popular:false,budget:true,essential:true,best_for:"Budget glider",pros:["Very affordable","Comfortable","Timeless"],cons:["Rocks not glides","Assembly needed","Cushion extra"]},{name:"Lovevery Play Gym",brand:"Lovevery",price:"$140",price_low:140,rating:4.8,reviews:"9,800+",popular:false,essential:false,best_for:"Stage-based play",pros:["Expert designed","Organic cotton","5 stages"],cons:["Expensive","Less musical","Minimalist"]},{name:"Fisher-Price Kick & Play Piano",brand:"Fisher-Price",price:"$49",price_low:49,rating:4.7,reviews:"24,000+",popular:false,budget:true,essential:false,best_for:"Budget with music",pros:["Music & lights","Piano kicks","Folds easy"],cons:["Gets repetitive","Thin mat","Outgrown fast"]},{name:"Deconovo Blackout Curtains 2-pack",brand:"Deconovo",price:"$22",price_low:22,rating:4.5,reviews:"18,400+",popular:false,budget:true,essential:true,best_for:"Nursery sleep",pros:["99% blackout","Affordable","Many options"],cons:["Measure carefully","May need multiple","Initial smell"]}],
-postpartum_body:[{name:"Silverette Silver Nipple Covers",brand:"Silverette",price:"$59",price_low:59,rating:4.7,reviews:"12,400+",popular:true,essential:false,best_for:"Healing cracked",pros:["Pure silver","No cream needed","Healing fast"],cons:["Expensive","Beware fakes","Positioning"]},{name:"Lansinoh Soothies Gel Pads",brand:"Lansinoh",price:"$10",price_low:10,rating:4.6,reviews:"21,000+",popular:false,budget:true,essential:true,best_for:"Instant soothing",pros:["Instant cool","Chill fridge","Reusable"],cons:["Not infected","Messy feel","Replace 72hr"]},{name:"Earth Mama Organic Nipple Butter",brand:"Earth Mama",price:"$10",price_low:10,rating:4.7,reviews:"24,000+",popular:false,budget:true,essential:true,best_for:"Organic care",pros:["Organic","Lanolin-free","Baby safe"],cons:["Pricier","Smaller","Prefers lanolin"]},{name:"Frida Mom Postpartum Recovery Kit",brand:"Frida Mom",price:"$30",price_low:30,rating:4.8,reviews:"18,200+",popular:false,essential:true,best_for:"Complete recovery",pros:["Everything in one","Hospital-grade bottle","First-week essential"],cons:["Single-use","Sizing","Runs out"]},{name:"Kindred Bravely Sublime Bra",brand:"Kindred Bravely",price:"$38",price_low:38,rating:4.7,reviews:"12,800+",popular:false,essential:true,best_for:"Nursing + pumping",pros:["Wireless","Multi-use","XS-4XL"],cons:["Hand wash","Padding shifts","Pricier"]}],
-postpartum_mental:[{name:"Hatch Restore 2 Sleep Alarm",brand:"Hatch",price:"$199",price_low:199,rating:4.7,reviews:"8,100+",popular:true,essential:false,best_for:"Better sleep",pros:["Sunrise alarm","Soundscapes","Also baby speaker"],cons:["Subscription","Pricey","Requires app"]},{name:"Calm App Gift Subscription",brand:"Calm",price:"$69",price_low:69,rating:4.7,reviews:"21,000+",popular:false,budget:true,essential:false,best_for:"Mental wellness",pros:["Postpartum content","Sleep stories","All devices"],cons:["Requires use","Content repeat","Narrators"]},{name:"Frida Mom Hospital Bag Kit",brand:"Frida Mom",price:"$40",price_low:40,rating:4.8,reviews:"9,400+",popular:false,essential:true,best_for:"Hospital must-have",pros:["Curated kit","Peri bottle","C-section safe"],cons:["Some cheaper solo","Not for everyone","Runs out"]},{name:"Momilk Lactation Tea",brand:"Momilk",price:"$12",price_low:12,rating:4.4,reviews:"5,200+",popular:false,budget:true,essential:false,best_for:"Supply support",pros:["Affordable","Natural herbs","Tasty"],cons:["Takes time","Variable results","Limited evidence"]},{name:"Lansinoh Lanolized Pads",brand:"Lansinoh",price:"$8",price_low:8,rating:4.5,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Reusable nursing pads",pros:["Washable","Affordable long-term","Eco-friendly"],cons:["Takes drying","Less absorbent","Edge rolling"]}]
+swings:[{name:"4moms mamaRoo 4",brand:"4moms",price:"$239",price_low:239,rating:4.4,reviews:"13,200+",popular:true,essential:false,best_for:"Varied motion",pros:["5 motions","Bluetooth app","Sleek design"],cons:["Some reject","Pricey","Not fully flat"]},{name:"Graco Sense2Soothe",brand:"Graco",price:"$169",price_low:169,rating:4.5,reviews:"8,300+",popular:false,essential:false,best_for:"Cry-detect soothing",pros:["Auto cry detect","18 sounds","Folds flat"],cons:["Bulky","Battery drains","Swing only"]},{name:"Graco DuetSoothe Swing",brand:"Graco",price:"$109",price_low:109,rating:4.4,reviews:"11,800+",popular:false,budget:true,essential:false,best_for:"Swing + rocker",pros:["2 in 1","6 speeds","Affordable"],cons:["Bulky storage","Average quality","Limited"]},{name:"Fisher-Price Deluxe Bouncer",brand:"Fisher-Price",price:"$44",price_low:44,rating:4.5,reviews:"19,000+",popular:false,budget:true,essential:false,best_for:"Budget bouncer",pros:["Cheap","Vibrations","Toy bar"],cons:["Battery drain","Basic pad","Manual only"]},{name:"Ingenuity SimpliComfort Auto",brand:"Ingenuity",price:"$99",price_low:99,rating:4.3,reviews:"10,200+",popular:false,budget:true,essential:false,best_for:"Budget auto-swing",pros:["Affordable swing","5 speeds","Gentle"],cons:["Smaller","Less features","Lower quality"]}],
+carriers:[{name:"Ergobaby Omni 360",brand:"Ergobaby",price:"$180",price_low:180,rating:4.8,reviews:"12,400+",popular:true,essential:false,best_for:"All-position",pros:["4 positions","Newborn ready","Lumbar support"],cons:["Pricier","Bulkier","Warm in summer"]},{name:"Solly Baby Wrap",brand:"Solly Baby",price:"$78",price_low:78,rating:4.7,reviews:"8,900+",popular:false,essential:false,best_for:"Newborn snuggle",pros:["Ultra soft","Newborn cocoon","Beautiful"],cons:["Learning curve","Not for heavy","Hand wash"]},{name:"Infantino Flip 4-in-1",brand:"Infantino",price:"$29",price_low:29,rating:4.4,reviews:"19,000+",popular:false,budget:true,essential:false,best_for:"Budget carrier",pros:["Very affordable","4 positions","Included insert"],cons:["Less padded","Lower comfort","Budget quality"]},{name:"LILLEbaby Complete",brand:"LILLEbaby",price:"$160",price_low:160,rating:4.6,reviews:"8,100+",popular:false,essential:false,best_for:"Premium ergonomic",pros:["6 positions","Mesh panels","Premium feel"],cons:["Expensive","Steeper learning","Bulky when off"]},{name:"Boba X Baby Carrier",brand:"Boba",price:"$119",price_low:119,rating:4.5,reviews:"6,200+",popular:false,essential:false,best_for:"Mid-range quality",pros:["Good price","Buckle carriers","Comfortable"],cons:["Less features","Learning needed","Average material"]}],
+nursery:[{name:"DaVinci Olive Glider",brand:"DaVinci",price:"$299",price_low:299,rating:4.7,reviews:"4,100+",popular:true,essential:true,best_for:"Mid-range glider",pros:["Smooth gliding","Ottoman included","GREENGUARD"],cons:["Pricier","Limited colors","Assembly time"]},{name:"IKEA POÄNG Chair",brand:"IKEA",price:"$149",price_low:149,rating:4.6,reviews:"8,200+",popular:false,budget:true,essential:true,best_for:"Budget glider",pros:["Very affordable","Comfortable","Timeless"],cons:["Rocks not glides","Assembly needed","Cushion extra"]},{name:"Lovevery Play Gym",brand:"Lovevery",price:"$140",price_low:140,rating:4.8,reviews:"9,800+",popular:false,essential:false,best_for:"Stage-based play",pros:["Expert designed","Organic cotton","5 stages"],cons:["Expensive","Less musical","Minimalist"]},{name:"Fisher-Price Kick & Play",brand:"Fisher-Price",price:"$49",price_low:49,rating:4.7,reviews:"24,000+",popular:false,budget:true,essential:false,best_for:"Budget with music",pros:["Music & lights","Piano kicks","Folds easy"],cons:["Gets repetitive","Thin mat","Outgrown fast"]},{name:"Deconovo Blackout Curtains",brand:"Deconovo",price:"$22",price_low:22,rating:4.5,reviews:"18,400+",popular:false,budget:true,essential:true,best_for:"Nursery sleep",pros:["99% blackout","Affordable","Many options"],cons:["Measure carefully","May need multiple","Initial smell"]}],
+postpartum_body:[{name:"Silverette Silver Nipple",brand:"Silverette",price:"$59",price_low:59,rating:4.7,reviews:"12,400+",popular:true,essential:false,best_for:"Healing cracked",pros:["Pure silver","No cream needed","Healing fast"],cons:["Expensive","Beware fakes","Positioning"]},{name:"Lansinoh Soothies Gel",brand:"Lansinoh",price:"$10",price_low:10,rating:4.6,reviews:"21,000+",popular:false,budget:true,essential:true,best_for:"Instant soothing",pros:["Instant cool","Chill fridge","Reusable"],cons:["Not infected","Messy feel","Replace 72hr"]},{name:"Earth Mama Organic Nipple",brand:"Earth Mama",price:"$10",price_low:10,rating:4.7,reviews:"24,000+",popular:false,budget:true,essential:true,best_for:"Organic care",pros:["Organic","Lanolin-free","Baby safe"],cons:["Pricier","Smaller","Prefers lanolin"]},{name:"Frida Mom Recovery Kit",brand:"Frida Mom",price:"$30",price_low:30,rating:4.8,reviews:"18,200+",popular:false,essential:true,best_for:"Complete recovery",pros:["Everything in one","Hospital-grade bottle","First-week essential"],cons:["Single-use","Sizing","Runs out"]},{name:"Kindred Bravely Sublime",brand:"Kindred Bravely",price:"$38",price_low:38,rating:4.7,reviews:"12,800+",popular:false,essential:true,best_for:"Nursing + pumping",pros:["Wireless","Multi-use","XS-4XL"],cons:["Hand wash","Padding shifts","Pricier"]}],
+postpartum_mental:[{name:"Hatch Restore 2",brand:"Hatch",price:"$199",price_low:199,rating:4.7,reviews:"8,100+",popular:true,essential:false,best_for:"Better sleep",pros:["Sunrise alarm","Soundscapes","Also baby speaker"],cons:["Subscription","Pricey","Requires app"]},{name:"Calm App Subscription",brand:"Calm",price:"$69",price_low:69,rating:4.7,reviews:"21,000+",popular:false,budget:true,essential:false,best_for:"Mental wellness",pros:["Postpartum content","Sleep stories","All devices"],cons:["Requires use","Content repeat","Narrators"]},{name:"Frida Mom Hospital Kit",brand:"Frida Mom",price:"$40",price_low:40,rating:4.8,reviews:"9,400+",popular:false,essential:true,best_for:"Hospital must-have",pros:["Curated kit","Peri bottle","C-section safe"],cons:["Some cheaper solo","Not for everyone","Runs out"]},{name:"Momilk Lactation Tea",brand:"Momilk",price:"$12",price_low:12,rating:4.4,reviews:"5,200+",popular:false,budget:true,essential:false,best_for:"Supply support",pros:["Affordable","Natural herbs","Tasty"],cons:["Takes time","Variable results","Limited evidence"]},{name:"Lansinoh Lanolized Pads",brand:"Lansinoh",price:"$8",price_low:8,rating:4.5,reviews:"8,900+",popular:false,budget:true,essential:true,best_for:"Reusable nursing pads",pros:["Washable","Affordable long-term","Eco-friendly"],cons:["Takes drying","Less absorbent","Edge rolling"]}]
 };
 
 var selCat=null,cmpList=[],showCmp=false,registry=[],budget=0;
@@ -250,20 +694,21 @@ function pickCat(cat){selCat=cat;cmpList=[];showCmp=false;document.querySelector
 
 function strs(r){var f=Math.floor(r);return"★".repeat(f)+"☆".repeat(5-f);}
 
-function renderProds(){var prods=P[selCat.id]||[];var html='<div class="legend"><div class="legend-item"><span class="ess-badge">Essential</span> Must-have</div></div><div class="info-note">Click "+ Compare" on 2–3 products then "Smart compare" for recommendations.</div><div class="product-grid">';prods.forEach(function(p,i){var isCmp=cmpList.indexOf(i)>-1;var key=p.name+"|"+selCat.id;var isReg=registry.some(function(r){return r.key===key;});var amzUrl="https://www.amazon.com/s?k="+encodeURIComponent(p.name);var eBadge=p.essential?'<span class="ess-badge">Essential</span>':'<span class="nice-badge">Nice</span>';html+='<div class="pcard'+(isCmp?" comparing":"")+(isReg?" in-registry":"")+'"><div class="pname">'+p.name+(p.popular?'<span class="popular-badge">Top</span>':'')+(p.budget?'<span class="budget-flag">Budget</span>':'')+eBadge+'</div><div class="pbrand">'+p.brand+' • '+p.best_for+'</div><div class="pprice">'+p.price+'</div><div class="prating"><span class="star">'+strs(p.rating)+'</span> '+p.rating+' ('+p.reviews+')</div><div class="pros-cons"><div><div class="plabel pro">Pros</div><ul class="plist">'+p.pros.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ul></div><div><div class="plabel con">Cons</div><ul class="plist">'+p.cons.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ul></div></div><div class="pactions"><a class="alink amz" href="'+amzUrl+'" target="_blank">Shop Amazon ↗</a></div><div class="card-btns"><button class="cbtn'+(isCmp?" cmp-on":"")+'" onclick="togCmp('+i+')">'+(isCmp?"✓ Comparing":"+ Compare")+'</button><button class="cbtn'+(isReg?" reg-on":"")+'" onclick="togReg('+i+')">'+(isReg?"✓ Added":"+ Registry")+'</button></div></div>';});html+='</div>';document.getElementById("browse-content").innerHTML=html;}
+function renderProds(){var prods=P[selCat.id]||[];var html='<div class="legend"><div class="legend-item"><span class="ess-badge">Essential</span> Must-have</div></div><div class="info-note">💡 Click "+ Compare" on 2–3 products then look for recommendations!</div><div class="product-grid">';prods.forEach(function(p,i){var isCmp=cmpList.indexOf(i)>-1;var key=p.name+"|"+selCat.id;var isReg=registry.some(function(r){return r.key===key;});var amzUrl="https://www.amazon.com/s?k="+encodeURIComponent(p.name);var eBadge=p.essential?'<span class="ess-badge">Essential</span>':'<span class="nice-badge">Nice</span>';html+='<div class="pcard'+(isCmp?" comparing":"")+(isReg?" in-registry":"")+'"><div class="pname">'+p.name+(p.popular?'<span class="popular-badge">✨ Top Pick</span>':'')+(p.budget?'<span class="budget-flag">💰 Budget</span>':'')+eBadge+'</div><div class="pbrand">'+p.brand+' • '+p.best_for+'</div><div class="pprice">'+p.price+'</div><div class="prating"><span class="star">'+strs(p.rating)+'</span> '+p.rating+' ('+p.reviews+')</div><div class="pros-cons"><div><div class="plabel pro">✓ Pros</div><ul class="plist">'+p.pros.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ul></div><div><div class="plabel con">✗ Cons</div><ul class="plist">'+p.cons.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ul></div></div><div class="pactions"><a class="alink" href="'+amzUrl+'" target="_blank">🛒 Shop Amazon</a></div><div class="card-btns"><button class="cbtn'+(isCmp?" cmp-on":"")+'" onclick="togCmp('+i+')">'+(isCmp?"✓ Comparing":"+ Compare")+'</button><button class="cbtn'+(isReg?" reg-on":"")+'" onclick="togReg('+i+')">'+(isReg?"💕 Added":"+ Registry")+'</button></div></div>';});html+='</div>';document.getElementById("browse-content").innerHTML=html;}
 
 function togCmp(i){var idx=cmpList.indexOf(i);if(idx>-1)cmpList.splice(idx,1);else if(cmpList.length<3)cmpList.push(i);renderProds();}
 
 function togReg(i){var p=P[selCat.id][i];var key=p.name+"|"+selCat.id;var idx=registry.findIndex(function(r){return r.key===key;});if(idx>-1)registry.splice(idx,1);else registry.push({key:key,name:p.name,brand:p.brand,category:selCat.label,price:p.price,price_low:p.price_low,essential:p.essential});save();upCount();renderProds();}
 
-function renderReg(){upCount();var el=document.getElementById("registry-content");if(!registry.length){el.innerHTML='<div class="reg-empty"><div style="font-size:36px;margin-bottom:10px">🛒</div><p>Your registry is empty</p></div>';return;}var bycat={};registry.forEach(function(r){if(!bycat[r.category])bycat[r.category]=[];bycat[r.category].push(r);});var html="";Object.keys(bycat).forEach(function(cat){html+='<div class="cat-hd">'+cat+'</div>';bycat[cat].forEach(function(item){var url="https://www.amazon.com/s?k="+encodeURIComponent(item.name);var eBadge=item.essential?'<span class="ess-badge">Essential</span>':'<span class="nice-badge">Nice</span>';var safeKey=item.key.replace(/'/g,"\\'");html+='<div class="reg-item"><div class="ri-info"><div class="ri-name">'+item.name+' '+eBadge+'</div><div class="ri-sub">'+item.brand+'</div><div class="ri-price">'+item.price+'</div></div><div style="display:flex;gap:8px"><a class="alink amz" href="'+url+'" target="_blank">Amazon ↗</a><button class="rm-btn" onclick="removeReg(\''+safeKey+'\')">Remove</button></div></div>';});});el.innerHTML=html;}
+function renderReg(){upCount();var el=document.getElementById("registry-content");if(!registry.length){el.innerHTML='<div class="reg-empty"><div style="font-size:3rem;margin-bottom:1rem">🛒</div><p style="font-size:1.2rem;font-weight:700;margin-bottom:0.5rem">Your registry is empty!</p><p>Add items from the Browse tab to get started</p></div>';return;}var bycat={};registry.forEach(function(r){if(!bycat[r.category])bycat[r.category]=[];bycat[r.category].push(r);});var html="";Object.keys(bycat).forEach(function(cat){html+='<div class="cat-hd">'+cat+'</div>';bycat[cat].forEach(function(item){var url="https://www.amazon.com/s?k="+encodeURIComponent(item.name);var eBadge=item.essential?'<span class="ess-badge">Essential</span>':'<span class="nice-badge">Nice</span>';var safeKey=item.key.replace(/'/g,"\\'");html+='<div class="reg-item"><div class="ri-info"><div class="ri-name">'+item.name+' '+eBadge+'</div><div class="ri-sub">'+item.brand+'</div><div class="ri-price">'+item.price+'</div></div><div style="display:flex;gap:8px"><a class="alink" href="'+url+'" target="_blank">🛒 Amazon</a><button class="rm-btn" onclick="removeReg(\''+safeKey+'\')">✕ Remove</button></div></div>';});});el.innerHTML=html;}
 
 function removeReg(key){registry=registry.filter(function(r){return r.key!==key;});save();upCount();renderReg();}
 
-function renderBudget(){var el=document.getElementById("budget-content");var total=registry.reduce(function(s,r){return s+(r.price_low||0);},0);var pct=budget>0?Math.min(100,Math.round(total/budget*100)):0;var html='<div class="budget-input-row"><label>My budget: $</label><input type="number" value="'+(budget||"")+'" placeholder="e.g. 2000" min="0" oninput="setBudget(this.value)"></div><div class="budget-box">';if(!registry.length){html+='<div style="color:var(--text2)">Add items to see totals here.</div>';}else{html+='<div class="brow"><span class="bl">Total estimate</span><span class="bv">~$'+total.toLocaleString()+'</span></div>';if(budget>0){html+='<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;background:'+(pct>100?"#E24B4A":"#639922")+'"></div></div><div style="font-size:12px;color:var(--text2);margin-top:6px">'+pct+'% of $'+budget.toLocaleString()+' budget'+(pct>100?" — over budget!":"")+'</div>';}}html+='</div><div class="tip-box">Add items to your registry and set a budget to track spending!</div>';el.innerHTML=html;}
+function renderBudget(){var el=document.getElementById("budget-content");var total=registry.reduce(function(s,r){return s+(r.price_low||0);},0);var ess=registry.filter(function(r){return r.essential;}).reduce(function(s,r){return s+(r.price_low||0);},0);var nice=total-ess;var pct=budget>0?Math.min(100,Math.round(total/budget*100)):0;var html='<div class="budget-input-row"><label>💰 My budget:</label><span style="font-size:0.9rem">$</span><input type="number" value="'+(budget||"")+'" placeholder="e.g. 2000" min="0" oninput="setBudget(this.value)"></div><div class="budget-box">';if(!registry.length){html+='<div style="color:var(--text-med);font-size:1rem">📦 Add items to see totals here!</div>';}else{html+='<div class="brow"><span class="bl">Essential items</span><span class="bv">~$'+ess.toLocaleString()+'</span></div><div class="brow"><span class="bl">Nice-to-have items</span><span class="bv">~$'+nice.toLocaleString()+'</span></div><div class="brow" style="border-top:2px dashed var(--text-light);padding-top:1rem;margin-top:1rem;font-size:1.1rem"><span class="bl">Total estimate</span><span class="bv">~$'+total.toLocaleString()+'</span></div>';if(budget>0){html+='<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;"></div></div><div style="font-size:0.9rem;color:var(--text-med);margin-top:1rem">'+pct+'% of $'+budget.toLocaleString()+' budget'+(pct>100?' ⚠️ Over budget!':'')+'</div>';}}html+='</div><div class="tip-box">💡 Pro tip: Guests can pick items at any price point. Essentials are the must-haves, nice-to-haves make great shower gifts!</div>';el.innerHTML=html;}
 
 function setBudget(v){budget=parseFloat(v)||0;save();renderBudget();}
 upCount();
 </script>
+
 </body>
 </html>
